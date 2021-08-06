@@ -1,0 +1,361 @@
+import 'package:flavor/apps/booking/booking.dart';
+import 'package:flavor/apps/dlxstudios/pages/dlxOnboarding.dart';
+import 'package:flavor/components/Page.dart';
+import 'package:flavor/components/flavorMenu.dart';
+import 'package:flavor/pages/PageWebHome.dart';
+import 'package:flavor/utilities/FlavorAppState.dart';
+import 'package:flavor/utilities/FlavorStore.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+List<Map<String, dynamic>> _apps = [
+  {
+    'title': 'Admin',
+    'icon': Icons.theaters,
+    'widget': BookingApp(),
+    'image': 'https://i.picsum.photos/id/866/200/200.jpg'
+  },
+  {
+    'title': 'SauceTv',
+    'icon': Icons.beach_access,
+    'widget': BookingApp(),
+    'image': 'https://i.picsum.photos/id/867/200/200.jpg'
+  },
+  {
+    'title': 'GoTix',
+    'icon': Icons.delete_outline,
+    'widget': BookingApp(),
+    'image': 'https://i.picsum.photos/id/868/200/200.jpg'
+  },
+  {
+    'title': 'Booking4',
+    'icon': Icons.calendar_today,
+    'widget': BookingApp(),
+    'image': 'https://i.picsum.photos/id/869/200/200.jpg'
+  },
+  {
+    'title': 'Booking4',
+    'icon': Icons.calendar_today,
+    'widget': BookingApp(),
+    'image': 'https://i.picsum.photos/id/860/200/200.jpg'
+  },
+];
+
+class DLXApp extends StatefulWidget {
+  @override
+  _DLXAppState createState() => _DLXAppState();
+}
+
+class _DLXAppState extends State<DLXApp> {
+  double gridItemFactor;
+  double listItemExtent = 200;
+  @override
+  void initState() {
+    super.initState();
+    gridItemFactor = 1;
+  }
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // FlavorJson flavorBoardJson = FlavorJson(context);
+    FlavorStore store = FlavorStore();
+
+    return ChangeNotifierProvider<FlavorAppState>(
+      create: (BuildContext context) {
+        return FlavorAppState(context, store );
+      },
+      child: Consumer<FlavorAppState>(
+        builder: (BuildContext context, state, Widget child) {
+          return FlavorApp(state);
+        },
+      ),
+    );
+  }
+}
+
+class FlavorApp extends StatelessWidget {
+  final FlavorAppState state;
+  const FlavorApp([
+    this.state,
+    Key key,
+  ]) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    var _menu = FlavorMenu(
+      navigatorKey: state.navigatorKey,
+      backgroundColor: Colors.transparent,
+      children: <Widget>[
+        ListTile(
+          leading: Icon(Icons.ondemand_video),
+          title: Text('Matches'),
+          onTap: () => state.navigatorKey.currentState.pushNamed('/'),
+        ),
+        ListTile(
+          leading: Icon(Icons.people),
+          title: Text('Players'),
+          onTap: () {
+            state.navigatorKey.currentState.pushNamed('players');
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.people_outline),
+          title: Text('Teams'),
+          onTap: () => state.navigatorKey.currentState.pushNamed('teams'),
+        ),
+        ListTile(
+          leading: Icon(Icons.gamepad),
+          title: Text('Games'),
+          onTap: () => state.navigatorKey.currentState.pushNamed('games'),
+        ),
+        ListTile(
+          leading: Icon(Icons.settings),
+          title: Text('Settings'),
+          onTap: () => state.navigatorKey.currentState.pushNamed('settings'),
+        ),
+
+        /// Menu Footer
+        Expanded(
+          child: Container(),
+        ),
+        ListTile(
+          leading: CircleAvatar(),
+          // title: Text(state.currentUser.email),
+          onTap: () {
+            // Navigator.of(context).pop();
+            // state.ScaffoldMessenger.of(context).openDrawer();
+            // Scaffold.of(context).openDrawer();
+            // state.navigatorKey.currentState.pushNamed('settings');
+            state.navigatorKey.currentState.pop();
+            print('settings');
+          },
+        ),
+
+        SizedBox(height: 20)
+      ],
+    );
+
+    var ma = MaterialApp(
+      debugShowCheckedModeBanner: false,
+      navigatorKey: state.navigatorKey,
+      darkTheme: ThemeData.dark()
+          .copyWith(primaryColor: Colors.amber, accentColor: Colors.amber),
+      builder: (context, child) {
+        if (state.currentUser == null) {
+          return DLXOnboarding();
+        }
+        return FlavorResponsiveView(
+          body: child,
+        );
+      },
+      onGenerateRoute: (routeSettings) {
+        Widget _page = PageError(
+          errorCode: 404.toString(),
+          msg:
+              'Page Not Found - ${routeSettings.name} ${routeSettings.arguments != null ? "\n Arguments : ${routeSettings.arguments}" : ""}',
+        );
+        var page = MaterialPageRoute(
+          builder: (context) {
+            return _page;
+          },
+        );
+        Map<String, dynamic> args = routeSettings.arguments;
+
+        switch (routeSettings.name) {
+          case 'home':
+            break;
+
+          case 'game':
+            if (args.containsKey('id')) {
+              // _page = SinglePlayerPage(id: args['id']);
+              break;
+            }
+            // _page = FlavorPageGrid(
+            //   listItemExtent: listItemExtent,
+            // );
+            break;
+          case 'player':
+            if (args.containsKey('id')) {
+              // _page = SinglePlayerPage(id: args['id']);
+              break;
+            }
+            // _page = FlavorPageGrid(
+            //   listItemExtent: listItemExtent,
+            // );
+
+            break;
+          default:
+            return page;
+        }
+
+        return page;
+      },
+      routes: {
+        '/': (BuildContext context) => Dashboard(),
+        'settings': (BuildContext context) => PageWebHome(),
+      },
+      // home: SafeArea(child: Dashboard()),
+    );
+
+    return ma;
+
+    return Scaffold(
+      body: FlavorResponsiveView(
+        body: ma,
+        // body: Scaffold(
+        //     // drawer: _menu,
+        //     // key: state.scaffoldKey,
+        //     appBar: AppBar(
+        //       elevation: 1,
+        //       title: Text('DLX Studios'),
+        //       primary: true,
+        //       leading: IconButton(
+        //         icon: Icon(Icons.menu),
+        //         onPressed: () {
+        //           state.ScaffoldMessenger.of(context).openDrawer();
+        //         },
+        //       ),
+        //     ),
+        //     // drawer: Container(),
+        //     // body: child
+        //     // body: SingleChildScrollView(
+        //     //   child: child,
+        //     // ),
+        //     body: child),
+      ),
+    );
+  }
+}
+
+class FlavorResponsiveView extends StatefulWidget {
+  final Widget startDrawer;
+  final Widget endDrawer;
+  final Widget body;
+
+  const FlavorResponsiveView(
+      {Key key, this.startDrawer, this.endDrawer, this.body})
+      : super(key: key);
+  @override
+  _FlavorResponsiveViewState createState() => _FlavorResponsiveViewState();
+}
+
+class _FlavorResponsiveViewState extends State<FlavorResponsiveView> {
+  // Widget _final;
+  // List<Widget> _children = [];
+  @override
+  Widget build(BuildContext context) {
+    FlavorAppState state = Provider.of<FlavorAppState>(context);
+    return LayoutBuilder(builder: (context, size) {
+      List<Widget> _children = [];
+      double _height = size.maxHeight;
+      double _width = size.maxWidth;
+      Widget _body = Expanded(
+          child: Container(
+        // width: 480,
+        color: Colors.purple,
+        child: widget.body,
+      ));
+      _children.add(_body);
+      state.breakpoint();
+
+      // !TODO : replace with FlavorAppScaffold
+      // if (size.maxWidth >= state.breakpoints['med']) {
+      //   print('state.breakpoints.med');
+      //   widget.startDrawer != null
+      //       ? _children.insert(
+      //           0,
+      //           Container(
+      //             height: _height,
+      //             width: 304,
+      //             color: Colors.blueGrey,
+      //             // margin: EdgeInsets.all(16),
+      //             child: widget.startDrawer,
+      //           ))
+      //       : Container();
+      // } else if (size.maxWidth >= state.breakpoints['large']) {
+      //   print('state.breakpoints.large');
+
+      //   widget.endDrawer != null
+      //       ? _children.insert(
+      //           2,
+      //           Container(
+      //             height: _height,
+      //             width: 304,
+      //             color: Colors.pink,
+      //             // margin: EdgeInsets.all(16),
+      //             child: widget.endDrawer,
+      //           ))
+      //       : Container();
+
+      //   print('_children.length : ${_children.length}');
+      // }
+
+      return SizedBox(
+        height: size.maxHeight,
+        width: size.maxWidth,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Container(
+              width: 300,
+              height: 300,
+            )
+          ],
+          // children: _children,
+        ),
+      );
+    });
+  }
+}
+
+Widget appbar(FlavorAppState state) => AppBar(
+      elevation: 1,
+      title: Text('DLX Studios'),
+      primary: true,
+      leading: IconButton(
+        icon: Icon(Icons.menu),
+        onPressed: () {
+          state.ScaffoldMessenger.of(context).openDrawer();
+        },
+      ),
+    );
+
+class Dashboard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GridView.count(
+      children: _apps.map((app) {
+        return GestureDetector(
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (BuildContext context) => app['widget']));
+          },
+          child: Container(
+            height: 200,
+            width: 200,
+            color: Colors.amber,
+            // child: Material(),
+          ),
+          // child: ThumbTile(
+          //   cover:
+          //       'https://static.vinepair.com/wp-content/uploads/2017/03/darts-int.jpg',
+          //   title: app['title'],
+          //   subtitle: app['subtitle'],
+          // ),
+        );
+      }).toList(),
+      crossAxisCount: 2,
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+      mainAxisSpacing: 16,
+      crossAxisSpacing: 16,
+    );
+  }
+}
