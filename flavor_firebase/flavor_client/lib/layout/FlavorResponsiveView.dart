@@ -1,5 +1,5 @@
-import 'package:flavor/layout/adaptive.dart';
-import 'package:flavor/utilities/services.dart';
+import 'package:flavor_client/layout/adaptive.dart';
+import 'package:flavor_client/utilities/services.dart';
 import 'package:flutter/material.dart';
 
 /// Breakpoint Examples

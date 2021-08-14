@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flavor/components/list.dart';
-import 'package:flavor/components/page.dart';
-import 'package:flavor/components/tiles.dart';
-import 'package:flavor/utilities/utils.dart';
+import 'package:flavor_client/components/list.dart';
+import 'package:flavor_client/components/page.dart';
+import 'package:flavor_client/components/tiles.dart';
+import 'package:flavor_client/utilities/utils.dart';
 import 'package:flutter/material.dart';
 
 class FlavorComponentView extends StatelessWidget {

@@ -1,5 +1,5 @@
-import 'package:flavor/colors.dart';
-import 'package:flavor/components/FlavorButton.dart';
+import 'package:flavor_client/colors.dart';
+import 'package:flavor_client/components/FlavorButton.dart';
 import 'package:flutter/material.dart';
 
 class EmailLoginFormView extends StatefulWidget {

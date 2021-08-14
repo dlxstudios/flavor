@@ -1,5 +1,5 @@
 import 'package:algolia/algolia.dart';
-import 'package:flavor/models/media.dart';
+import 'package:flavor_client/models/media.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';

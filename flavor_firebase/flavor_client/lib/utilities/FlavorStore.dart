@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:flavor/utilities/services.dart';
+import 'package:flavor_client/utilities/services.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 

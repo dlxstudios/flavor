@@ -3,8 +3,9 @@
 
 // import 'package:flavor_auth/src/models/user.dart';
 
-// import 'package:flavor/utilities/FlavorStore.dart';
-// import 'package:flavor/utilities/services.dart';
+
+// import 'package:flavor_client/utilities/FlavorStore.dart';
+// import 'package:flavor_client/utilities/services.dart';
 // import 'package:flutter/foundation.dart';
 // import 'package:http/http.dart';
 // import 'package:process_run/process_run.dart';

@@ -1,4 +1,4 @@
-import 'package:flavor/utilities/tmdb_api.dart';
+import 'package:flavor_client/utilities/tmdb_api.dart';
 
 class ItemModel {
   int? _page;

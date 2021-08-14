@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flavor/components/component.dart';
-import 'package:flavor/components/list.dart';
-import 'package:flavor/layout/FlavorResponsiveView.dart';
-import 'package:flavor/layout/adaptive.dart';
-import 'package:flavor/repository/firestore.dart';
+import 'package:flavor_client/components/component.dart';
+import 'package:flavor_client/components/list.dart';
+import 'package:flavor_client/layout/FlavorResponsiveView.dart';
+import 'package:flavor_client/layout/adaptive.dart';
+import 'package:flavor_client/repository/firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

@@ -1,7 +1,7 @@
-import 'package:flavor/components/page.dart';
-// import 'package:flavor/utilities/FlavorAuth.dart';
+import 'package:flavor_client/components/page.dart';
+// import 'package:flavor_client/utilities/FlavorAuth.dart';
 import 'package:flutter/material.dart';
-import 'package:flavor/components/tiles.dart';
+import 'package:flavor_client/components/tiles.dart';
 
 class DLXOnboarding extends StatefulWidget {
   @override

@@ -1,6 +1,6 @@
 /// Media model ( Video/ Audio / Images )
 
-import 'package:flavor/utilities/firestoreObjects.dart';
+import 'package:flavor_client/utilities/firestoreObjects.dart';
 
 abstract class Media {
   /// Algolia

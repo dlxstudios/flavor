@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flavor/apps/admin/repository.dart';
-import 'package:flavor/colors.dart';
-import 'package:flavor/components/manager/repo_manager.dart';
-import 'package:flavor/components/route.dart';
-import 'package:flavor/layout/app.dart';
+import 'package:flavor_client/apps/admin/repository.dart';
+import 'package:flavor_client/colors.dart';
+import 'package:flavor_client/components/manager/repo_manager.dart';
+import 'package:flavor_client/components/route.dart';
 import 'package:flavor_auth/flavor_auth.dart';
 import 'package:flutter/material.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
@@ -47,8 +47,8 @@ class AppStateConsumer extends ConsumerWidget {
   });
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
-    final FlavorClientState app = watch(appProvider);
+  Widget build(BuildContext context, ref) {
+    final FlavorClientState app = ref.watch(appProvider);
     return consumer;
   }
 }

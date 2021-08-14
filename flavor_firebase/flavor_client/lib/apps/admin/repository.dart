@@ -1,5 +1,5 @@
 import 'package:algolia/algolia.dart';
-import 'package:flavor/models/media.dart';
+import 'package:flavor_client/models/media.dart';
 import 'package:flavor_auth/flavor_auth.dart';
 import 'package:flutter/foundation.dart';
 
@@ -78,8 +78,7 @@ class FlavorSearchService extends ChangeNotifier {
   }
 
   Future<List<Track>> getTrackList() async {
-    AlgoliaQuery _searchQuery =
-        algolia.instance.index('$mediaIndex').search('');
+    AlgoliaQuery _searchQuery = algolia.instance.index('$mediaIndex').query('');
     AlgoliaQuerySnapshot snap = await _searchQuery.getObjects();
     List<Track> temp = [];
 

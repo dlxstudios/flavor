@@ -1,10 +1,10 @@
-// import 'package:flavor/components/flavorCard.dart';
-import 'package:flavor/components/card.dart';
-import 'package:flavor/components/flavorHorizontalList.dart';
-import 'package:flavor/components/flavorMenu.dart';
-import 'package:flavor/models/media.dart';
-import 'package:flavor/models/models.dart';
-import 'package:flavor/models/section.dart';
+// import 'package:flavor_client/components/flavorCard.dart';
+import 'package:flavor_client/components/card.dart';
+import 'package:flavor_client/components/flavorHorizontalList.dart';
+import 'package:flavor_client/components/flavorMenu.dart';
+import 'package:flavor_client/models/media.dart';
+import 'package:flavor_client/models/models.dart';
+import 'package:flavor_client/models/section.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

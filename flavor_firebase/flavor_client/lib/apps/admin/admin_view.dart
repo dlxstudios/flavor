@@ -1,15 +1,16 @@
-import 'package:flavor/apps/admin/state.dart';
-import 'package:flavor/components/refactor_components.dart';
-import 'package:flavor/components/route.dart';
-import 'package:flavor/theme/clay/clay.dart';
-import 'package:flavor/utilities/color.dart';
+import 'package:flavor_client/apps/admin/state.dart';
+import 'package:flavor_client/components/refactor_components.dart';
+import 'package:flavor_client/components/route.dart';
+import 'package:flavor_client/theme/clay/clay.dart';
+import 'package:flavor_client/utilities/color.dart';
 import 'package:flutter/material.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class FlavorAdminAppView extends ConsumerWidget {
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
-    final adminState = watch(flavorAdminStateProvider);
+  Widget build(BuildContext context, ref) {
+    final adminState = ref.watch(flavorAdminStateProvider);
 
     Route onGenerateRoute(RouteSettings settings) {
       var path;

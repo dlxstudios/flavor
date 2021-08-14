@@ -1,4 +1,4 @@
-import 'package:flavor/apps/CastUp/CastModels.dart';
+import 'package:flavor_client/apps/CastUp/CastModels.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 

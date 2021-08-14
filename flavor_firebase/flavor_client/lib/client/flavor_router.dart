@@ -1,9 +1,8 @@
 import 'dart:async';
 
 import 'package:animations/animations.dart';
-import 'package:flavor/client/flavor_state.dart';
-import 'package:flavor/components/page.dart';
-import 'package:flavor/components/route.dart';
+import 'package:flavor_client/client/flavor_state.dart';
+import 'package:flavor_client/components/page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -12,9 +11,7 @@ import 'package:flutter/widgets.dart';
 class SharedAxisTransitionPageWrapper extends Page {
   const SharedAxisTransitionPageWrapper(
       {required this.screen, required this.transitionKey})
-      : assert(screen != null),
-        assert(transitionKey != null),
-        super(key: transitionKey);
+      : super(key: transitionKey);
 
   final Widget screen;
   final ValueKey transitionKey;

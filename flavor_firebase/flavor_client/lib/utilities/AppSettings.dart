@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:flavor/utilities/utils.dart';
+import 'package:flavor_client/utilities/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hive/hive.dart';

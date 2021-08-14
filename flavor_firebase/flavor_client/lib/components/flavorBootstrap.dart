@@ -1,15 +1,16 @@
 // import 'dart:convert';
 
-// import 'package:flavor/components/flavorMenu.dart';
-// import 'package:flavor/components/flavorScaffold.dart';
-// import 'package:flavor/layout/adaptive.dart';
-// import 'package:flavor/models/app.dart';
-// import 'package:flavor/utilities/FlavorAppState.dart';
-// // import 'package:flavor/utilities/FlavorAuth.dart';
+// import 'package:flavor_client/components/flavorMenu.dart';
+// import 'package:flavor_client/components/flavorScaffold.dart';
+// import 'package:flavor_client/layout/adaptive.dart';
+// import 'package:flavor_client/models/app.dart';
+// import 'package:flavor_client/utilities/FlavorAppState.dart';
+// // import 'package:flavor_client/utilities/FlavorAuth.dart';
 // import 'package:flutter/material.dart';
 // import 'package:flutter/services.dart';
 // import 'package:provider/provider.dart';
 // import 'package:flavor_auth/src/models/user.dart';
+
 
 // ThemeData defaultTheme = ThemeData.dark().copyWith(
 //   primaryColor: Colors.white,

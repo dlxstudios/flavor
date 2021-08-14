@@ -1,4 +1,4 @@
-import 'package:flavor/models/section.dart';
+import 'package:flavor_client/models/section.dart';
 import 'package:flutter/material.dart';
 
 ////

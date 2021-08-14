@@ -1,7 +1,7 @@
-// import 'package:flavor/apps/admin/state.dart';
-// import 'package:flavor/components/route.dart';
-// import 'package:flavor/layout/adaptive_view.dart';
-// import 'package:flavor/theme/clay/widget.dart';
+// import 'package:flavor_client/apps/admin/state.dart';
+// import 'package:flavor_client/components/route.dart';
+// import 'package:flavor_client/layout/adaptive_view.dart';
+// import 'package:flavor_client/theme/clay/widget.dart';
 // import 'package:flutter/foundation.dart';
 // import 'package:flutter/material.dart';
 // import 'package:hooks_riverpod/hooks_riverpod.dart';

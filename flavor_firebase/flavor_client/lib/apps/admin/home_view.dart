@@ -1,20 +1,20 @@
-import 'package:flavor/apps/admin/state.dart';
-import 'package:flavor/components/list.dart';
-import 'package:flavor/components/page.dart';
-import 'package:flavor/components/refactor_components.dart';
-import 'package:flavor/components/route.dart';
-import 'package:flavor/models/media.dart';
-import 'package:flavor/models/models.dart';
-import 'package:flavor/samples.dart';
-import 'package:flavor/theme/clay/clay.dart';
-import 'package:flavor/theme/clay/widget.dart';
+import 'package:flavor_client/apps/admin/state.dart';
+import 'package:flavor_client/components/list.dart';
+import 'package:flavor_client/components/page.dart';
+import 'package:flavor_client/components/refactor_components.dart';
+import 'package:flavor_client/components/route.dart';
+import 'package:flavor_client/models/media.dart';
+import 'package:flavor_client/samples.dart';
+import 'package:flavor_client/theme/clay/clay.dart';
+import 'package:flavor_client/theme/clay/widget.dart';
 import 'package:flutter/material.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class HomeConsumer extends ConsumerWidget {
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
-    final adminState = watch(flavorAdminStateProvider);
+  Widget build(BuildContext context, ref) {
+    final adminState = ref.watch(flavorAdminStateProvider);
     var controller = ScrollController(keepScrollOffset: true);
     // flavorAdminStateProvider.select((value) => null);
     // final age = watch(personProvider.select((p) => p.age));
@@ -27,17 +27,14 @@ class HomeConsumer extends ConsumerWidget {
             return ClayTileCard(
               body: Text('No Data!'),
             );
-            break;
           case ConnectionState.waiting:
             return ClayTileCard(
               body: Text('Preparing yo order chef!'),
             );
-            break;
           case ConnectionState.active:
             return ClayTileCard(
               body: Text('No Data!'),
             );
-            break;
           case ConnectionState.done:
             if (snapshot.hasError) {
               return ClayTileCard(
@@ -274,10 +271,7 @@ class HomeConsumer extends ConsumerWidget {
             return ClayTileCard(
               body: Text('Done'),
             );
-            break;
         }
-
-        return Container();
       },
     );
   }

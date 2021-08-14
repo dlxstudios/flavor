@@ -1,6 +1,6 @@
-import 'package:flavor/components/refactor_components.dart';
+import 'package:flavor_client/components/refactor_components.dart';
 
-import 'package:flavor/utilities/AppSettings.dart';
+import 'package:flavor_client/utilities/AppSettings.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

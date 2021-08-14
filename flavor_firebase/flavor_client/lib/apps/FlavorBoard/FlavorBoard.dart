@@ -1,9 +1,9 @@
-import 'package:flavor/components/page.dart';
-import 'package:flavor/components/grid.dart';
-import 'package:flavor/components/flavorHorizontalList.dart';
-import 'package:flavor/components/flavorMenu.dart';
-import 'package:flavor/models/models.dart';
-import 'package:flavor/models/section.dart';
+import 'package:flavor_client/components/page.dart';
+import 'package:flavor_client/components/grid.dart';
+import 'package:flavor_client/components/flavorHorizontalList.dart';
+import 'package:flavor_client/components/flavorMenu.dart';
+import 'package:flavor_client/models/models.dart';
+import 'package:flavor_client/models/section.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';

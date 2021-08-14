@@ -1,6 +1,6 @@
-import 'package:flavor/apps/admin/repository.dart';
-import 'package:flavor/apps/admin/routes.dart';
-import 'package:flavor/components/route.dart';
+import 'package:flavor_client/apps/admin/repository.dart';
+import 'package:flavor_client/apps/admin/routes.dart';
+import 'package:flavor_client/components/route.dart';
 import 'package:flavor_auth/flavor_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -9,7 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 // class FlavorAdminStateConsumer extends ConsumerWidget {
 //   @override
-//   Widget build(BuildContext context, ScopedReader watch) {
+//   Widget build(BuildContext context, ref) {
 //     // final adminState = watch(myNotifierProvider);
 //     return FlavorAdminAppView();
 //   }

@@ -1,7 +1,7 @@
-import 'package:flavor/components/tiles.dart';
-import 'package:flavor/components/refactor_components.dart';
-import 'package:flavor/models/models.dart';
-import 'package:flavor/models/section.dart';
+import 'package:flavor_client/components/tiles.dart';
+import 'package:flavor_client/components/refactor_components.dart';
+import 'package:flavor_client/models/models.dart';
+import 'package:flavor_client/models/section.dart';
 import 'package:flutter/material.dart';
 
 class FlavorCard extends StatelessWidget {

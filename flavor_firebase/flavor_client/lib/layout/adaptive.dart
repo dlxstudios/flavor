@@ -1,4 +1,4 @@
-import 'package:flavor/utilities/services.dart';
+import 'package:flavor_client/utilities/services.dart';
 import 'package:flutter/material.dart';
 
 enum DisplayType { s, m, l, xl }

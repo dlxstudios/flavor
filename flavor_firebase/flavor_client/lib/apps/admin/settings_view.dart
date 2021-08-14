@@ -1,18 +1,19 @@
-import 'package:flavor/apps/admin/state.dart';
-import 'package:flavor/components/list.dart';
-import 'package:flavor/components/page.dart';
-import 'package:flavor/components/refactor_components.dart';
-import 'package:flavor/components/route.dart';
-import 'package:flavor/samples.dart';
-import 'package:flavor/theme/clay/clay.dart';
-import 'package:flavor/theme/clay/widget.dart';
+import 'package:flavor_client/apps/admin/state.dart';
+import 'package:flavor_client/components/list.dart';
+import 'package:flavor_client/components/page.dart';
+import 'package:flavor_client/components/refactor_components.dart';
+import 'package:flavor_client/components/route.dart';
+import 'package:flavor_client/samples.dart';
+import 'package:flavor_client/theme/clay/clay.dart';
+import 'package:flavor_client/theme/clay/widget.dart';
 import 'package:flutter/material.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class SettingsConsumer extends ConsumerWidget {
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
-    final adminState = watch(flavorAdminStateProvider);
+  Widget build(BuildContext context, ref) {
+    final adminState = ref.watch(flavorAdminStateProvider);
     var controller = ScrollController();
     // flavorAdminStateProvider.select((value) => null);
     // final age = watch(personProvider.select((p) => p.age));

@@ -1,8 +1,8 @@
-import 'package:flavor/components/page.dart';
-import 'package:flavor/components/flavorMenu.dart';
-import 'package:flavor/models/models.dart';
-import 'package:flavor/pages/dashboard.dart';
-import 'package:flavor/utilities/AppSettings.dart';
+import 'package:flavor_client/components/page.dart';
+import 'package:flavor_client/components/flavorMenu.dart';
+import 'package:flavor_client/models/models.dart';
+import 'package:flavor_client/pages/dashboard.dart';
+import 'package:flavor_client/utilities/AppSettings.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

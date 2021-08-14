@@ -2,9 +2,10 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flavor/repository/firestore.dart';
+import 'package:flavor_client/repository/firestore.dart';
 // ignore: implementation_imports
 import 'package:flavor_auth/src/models/user.dart';
+
 import 'package:flutter/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

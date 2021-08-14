@@ -1,11 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flavor/components/page.dart';
+import 'package:flavor_client/components/page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class FirebaseBootstrap extends StatelessWidget {
   // Create the initialization Future outside of `build`:
-  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+  final Function _initialization = Firebase.initializeApp;
 
   final Widget child;
 
@@ -14,8 +14,7 @@ class FirebaseBootstrap extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      // Initialize FlutterFire:
-      future: _initialization,
+      future: _initialization(),
       builder: (context, snapshot) {
         print('snapshot.connectionState - ${snapshot.connectionState}');
         print('snapshot.data - ${snapshot.data}');
@@ -27,7 +26,6 @@ class FirebaseBootstrap extends StatelessWidget {
                 errorCode: 500.toString(),
                 msg: snapshot.error.toString(),
                 title: 'Issue connecting to database',
-                type: '',
               ),
             ),
           );

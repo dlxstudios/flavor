@@ -1,9 +1,9 @@
-import 'package:flavor/apps/admin/home_view.dart';
-import 'package:flavor/apps/admin/mediaDetail_view.dart';
-import 'package:flavor/apps/admin/settings_view.dart';
+import 'package:flavor_client/apps/admin/home_view.dart';
+import 'package:flavor_client/apps/admin/mediaDetail_view.dart';
+import 'package:flavor_client/apps/admin/settings_view.dart';
 import 'package:flutter/material.dart';
 //
-import 'package:flavor/components/route.dart';
+import 'package:flavor_client/components/route.dart';
 //
 
 //

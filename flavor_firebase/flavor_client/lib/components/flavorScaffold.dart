@@ -1,6 +1,6 @@
-import 'package:flavor/layout/FlavorResponsiveView.dart';
-import 'package:flavor/components/page.dart';
-import 'package:flavor/layout/adaptive.dart';
+import 'package:flavor_client/layout/FlavorResponsiveView.dart';
+import 'package:flavor_client/components/page.dart';
+import 'package:flavor_client/layout/adaptive.dart';
 import 'package:flutter/material.dart';
 
 class FlavorScaffold extends StatelessWidget {

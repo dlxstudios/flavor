@@ -1,6 +1,6 @@
-import 'package:flavor/components/tiles.dart';
-import 'package:flavor/components/refactor_components.dart';
-import 'package:flavor/theme/clay/widget.dart';
+import 'package:flavor_client/components/tiles.dart';
+import 'package:flavor_client/components/refactor_components.dart';
+import 'package:flavor_client/theme/clay/widget.dart';
 import 'package:flutter/material.dart';
 
 class FlavorList extends StatelessWidget {

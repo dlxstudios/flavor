@@ -1,8 +1,9 @@
-import 'package:flavor/components/route.dart';
-import 'package:flavor/models/media.dart';
-import 'package:flavor/theme/clay/clay.dart';
-import 'package:flavor/utilities/utils.dart';
+import 'package:flavor_client/components/route.dart';
+import 'package:flavor_client/models/media.dart';
+import 'package:flavor_client/theme/clay/clay.dart';
+import 'package:flavor_client/utilities/utils.dart';
 import 'package:flutter/material.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class MediaDetailConsumer extends ConsumerWidget {
@@ -13,7 +14,7 @@ class MediaDetailConsumer extends ConsumerWidget {
   final ScrollController controller = ScrollController(keepScrollOffset: true);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context, ref) {
     final Track item =
         Track.fromJson(this.mediaData!.data as Map<String, dynamic>);
     print(item.title);

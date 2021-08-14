@@ -1,4 +1,4 @@
-import 'package:flavor/utilities/tmdb_model.dart';
+import 'package:flavor_client/utilities/tmdb_model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';

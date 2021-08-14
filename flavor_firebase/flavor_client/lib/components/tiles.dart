@@ -1,5 +1,5 @@
-import 'package:flavor/components/refactor_components.dart';
-import 'package:flavor/utilities/utils.dart';
+import 'package:flavor_client/components/refactor_components.dart';
+import 'package:flavor_client/utilities/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 

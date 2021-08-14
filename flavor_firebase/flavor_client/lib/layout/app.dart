@@ -1,6 +1,6 @@
-import 'package:flavor/client/flavor_router.dart';
-import 'package:flavor/client/flavor_state.dart';
-import 'package:flavor/components/route.dart';
+import 'package:flavor_client/client/flavor_router.dart';
+import 'package:flavor_client/client/flavor_state.dart';
+import 'package:flavor_client/components/route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,8 +14,8 @@ class FlavorApp extends ConsumerWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context, watch) {
-    final FlavorClientState app = watch(this.appState);
+  Widget build(BuildContext context, ref) {
+    final FlavorClientState app = ref.watch(this.appState);
 
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,

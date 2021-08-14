@@ -1,4 +1,4 @@
-import 'package:flavor/utilities/FlavorAppState.dart';
+import 'package:flavor_client/utilities/FlavorAppState.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
