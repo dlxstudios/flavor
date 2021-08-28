@@ -165,7 +165,7 @@ class _PageOnboardingViewState extends State<PageOnboardingView>
                               usernameTextController: _usernameTextController,
                               passwordTextController: _passwordTextController,
                               scaffoldKey: scaffoldKey,
-                              onEmailLogin: (email, password) async {
+                              onPressedLoginEmail: (email, password) async {
                                 if (widget.onEmailLogin != null) {
                                   await widget.onEmailLogin!(email, password);
                                 }

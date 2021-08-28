@@ -2,7 +2,7 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flavor_client/repository/firestore.dart';
+
 // ignore: implementation_imports
 import 'package:flavor_auth/src/models/user.dart';
 
@@ -41,10 +41,10 @@ class FlavorFileManager extends ChangeNotifier {
 //
   FirebaseFirestore get firestore => FirebaseFirestore.instance;
 //
-  Future<ListResult> getUserFiles() async {
+  Future<void> getUserFiles() async {
     String link = '/$defaultStorageRef/${user.email}';
     // print(link);
-    var result = await FirebaseStorage.instance.ref().listAll();
+    var result = await FirebaseStorage.instance;
     // print('^GETMEDIA::result.items.length ');
     // print('^ -  ${result.items.length}');
 
@@ -55,7 +55,7 @@ class FlavorFileManager extends ChangeNotifier {
     // result.prefixes.forEach((Reference ref) {
     //   print('Found directory: $ref');
     // });
-    return result;
+    // return result;
   }
   //
 

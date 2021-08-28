@@ -1,268 +1,100 @@
+import 'package:flavor_auth/flavor_auth.dart';
+import 'package:flavor_client/pages/onboarding/emailLogin_view.dart';
+import 'package:flavor_client/pages/onboarding/emailSignup_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class FlavorOnboardingV3 extends StatefulWidget {
-  const FlavorOnboardingV3({Key? key}) : super(key: key);
+  // final void Function()? onPressedLoginEmail;
+
+  final Future Function(String email, String password)? onEmailLogin;
+  final Future Function(String email, String password, String passwordReEnter)?
+      onEmailSignup;
+
+  final String? title;
+  final String? description;
+  final Widget? flexiableSpace;
+  final ThemeData? themeData;
+  //
+  final String gApiKey;
+
+  final bool isLoggedIn;
+
+  const FlavorOnboardingV3({
+    Key? key,
+    // this.onPressedLoginEmail,
+    this.onEmailLogin,
+    this.onEmailSignup,
+    this.title,
+    this.description,
+    this.flexiableSpace,
+    this.themeData,
+    required this.gApiKey,
+    this.isLoggedIn = false,
+  }) : super(key: key);
 
   @override
   _OnboardingV3State createState() => _OnboardingV3State();
 }
 
-class _OnboardingV3State extends State<FlavorOnboardingV3> {
-  bool _rememberMe = false;
+class _OnboardingV3State extends State<FlavorOnboardingV3>
+    with SingleTickerProviderStateMixin {
+  bool notBusy = true;
+  var signinError;
 
-  Widget _buildEmailTF() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        // Text(
-        //   'Email',
-        //   style: kLabelStyle,
-        // ),
-        SizedBox(height: 10.0),
-        Container(
-          alignment: Alignment.centerLeft,
-          // decoration: kBoxDecorationStyle,
-          height: 60.0,
-          child: TextField(
-            keyboardType: TextInputType.emailAddress,
+  final _onBoardFormLoginKey = GlobalKey<FormState>();
+  final _onBoardFormSignUpKey = GlobalKey<FormState>();
+  final _passwordTextController = TextEditingController(
+    text: 'Rocky0813!',
+  );
+  final _repasswordTextController = TextEditingController(
+    text: 'Rocky0813!',
+  );
+  final _usernameTextController = TextEditingController(
+    text: 'losbetosllc@gmail.com',
+  );
 
-            // style: TextStyle(
-            //     // color: Colors.white,
-            //     // fontFamily: 'OpenSans',
-            //     ),
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              // border: OutlineInputBorder(),
-              // contentPadding: EdgeInsets.only(top: 9.0),
-              contentPadding: EdgeInsets.only(top: 14.0),
+  GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
 
-              prefixIcon: Icon(
-                Icons.email,
-                // color: Colors.white,
-              ),
-              hintText: 'Enter your Email',
-              // hintStyle: kHintTextStyle,
-            ),
-          ),
-        ),
-      ],
-    );
+  Widget? _endDrawer;
+
+  TabController? _tabController;
+
+  final List<Tab> myTabs = <Tab>[
+    Tab(
+      text: 'Login',
+      // icon: new Icon(Icons.show_chart),
+    ),
+    Tab(
+      text: 'Sign up',
+      // icon: new Icon(Icons.show_chart),
+    ),
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController =
+        TabController(vsync: this, length: myTabs.length, initialIndex: 1);
   }
 
-  Widget _buildPasswordTF() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        // Text(
-        //   'Password',
-        //   style: kLabelStyle,
-        // ),
-        SizedBox(height: 10.0),
-        Container(
-          alignment: Alignment.centerLeft,
-          // decoration: kBoxDecorationStyle,
-          height: 60.0,
-          child: TextField(
-            obscureText: true,
-            // style: TextStyle(
-            //     // color: Colors.white,
-            //     // fontFamily: 'OpenSans',
-            //     ),
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              contentPadding: EdgeInsets.only(top: 14.0),
-              prefixIcon: Icon(
-                Icons.lock,
-                // color: Colors.white,
-              ),
-              hintText: 'Enter your Password',
-              // hintStyle: kHintTextStyle,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildForgotPasswordBtn() {
-    return Container(
-      alignment: Alignment.centerRight,
-      child: TextButton(
-        onPressed: () => print('Forgot Password Button Pressed'),
-        // padding: EdgeInsets.only(right: 0.0),
-        child: Text(
-          'Forgot Password?',
-          // style: kLabelStyle,
-        ),
-      ),
-    );
-  }
-
-  Widget _buildRememberMeCheckbox() {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 8.0),
-
-      // height: 20.0,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          Theme(
-            data: ThemeData(unselectedWidgetColor: Colors.black87),
-            child: Checkbox(
-              value: _rememberMe,
-              // checkColor: Colors.green,
-              // activeColor: Colors.white,
-              onChanged: (value) {
-                setState(() {
-                  _rememberMe = value!;
-                });
-              },
-            ),
-          ),
-          Text(
-            'Remember me',
-            // style: kLabelStyle,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildLoginBtn() {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 32),
-      width: double.infinity,
-      child: ElevatedButton(
-        onPressed: widget.onPressedLoginEmail ??
-            () {
-              print('_buildLoginBtn::login pressed');
-            },
-        child: Text(
-          'LOGIN',
-          style: TextStyle(
-            // color: Color(0xFF527DAA),
-            letterSpacing: 1.5,
-            fontSize: 18.0,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildSignInWithText() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        children: <Widget>[
-          Text(
-            '- OR -',
-            style: TextStyle(
-              // color: Colors.white,
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-          SizedBox(height: 16.0),
-          Text(
-            'Sign in with',
-            // style: kLabelStyle,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildSocialBtn(Function onTap, AssetImage logo) {
-    return GestureDetector(
-      onTap: () {},
-      child: Container(
-        height: 60.0,
-        width: 60.0,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black26,
-              offset: Offset(0, 2),
-              blurRadius: 6.0,
-            ),
-          ],
-          image: DecorationImage(
-            image: logo,
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildSocialBtnRow() {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 30.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          _buildSocialBtn(
-            () => print('Login with Apple'),
-            AssetImage(
-              'assets/logos/google.jpg',
-            ),
-          ),
-          _buildSocialBtn(
-            () => print('Login with Facebook'),
-            AssetImage(
-              'assets/logos/facebook.jpg',
-            ),
-          ),
-          _buildSocialBtn(
-            () => print('Login with Google'),
-            AssetImage(
-              'assets/logos/google.jpg',
-            ),
-          ),
-          _buildSocialBtn(
-            () => print('Login with Yelp'),
-            AssetImage(
-              'assets/logos/google.jpg',
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildSignupBtn() {
-    return GestureDetector(
-      onTap: () => print('Sign Up Button Pressed'),
-      child: RichText(
-        text: TextSpan(
-          children: [
-            TextSpan(
-              text: 'Don\'t have an Account? ',
-              style: TextStyle(
-                // color: Colors.white,
-                fontSize: 18.0,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            TextSpan(
-              text: 'Sign Up',
-              style: TextStyle(
-                // color: Colors.white,
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+  @override
+  void dispose() {
+    _tabController?.dispose();
+    _usernameTextController.dispose();
+    _passwordTextController.dispose();
+    _repasswordTextController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    if (widget.isLoggedIn) {
+      return Center(
+        child: Text('already logged in'),
+      );
+    }
+
     return Scaffold(
       // appBar: AppBar(),
       body: Center(
@@ -292,7 +124,7 @@ class _OnboardingV3State extends State<FlavorOnboardingV3> {
                     // ),
                   ),
                   Container(
-                    height: double.infinity,
+                    // height: double.infinity,
                     child: SafeArea(
                       child: SingleChildScrollView(
                         primary: true,
@@ -312,44 +144,74 @@ class _OnboardingV3State extends State<FlavorOnboardingV3> {
                               child: Image.asset('assets/images/logo.png'),
                             ),
                             SizedBox(
-                              height: 42,
+                              height: 36,
                             ),
-                            Card(
-                              child: Padding(
-                                padding: const EdgeInsets.all(16.0),
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      'Sign In',
-                                      style: TextStyle(
-                                        // color: Colors.white,
-                                        fontSize: 30.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                            Container(
+                              constraints: BoxConstraints(
+                                  minHeight: 340, maxHeight: 400),
+                              padding: const EdgeInsets.all(8.0),
+                              child: TabBarView(
+                                controller: _tabController,
+                                children: [
+                                  Container(
+                                    padding: EdgeInsets.all(16),
+                                    child: EmailLoginFormView(
+                                      onBoardFormLoginKey: _onBoardFormLoginKey,
+                                      usernameTextController:
+                                          _usernameTextController,
+                                      passwordTextController:
+                                          _passwordTextController,
+                                      scaffoldKey: scaffoldKey,
+                                      onPressedLoginEmail:
+                                          (email, password) async {
+                                        if (widget.onEmailLogin != null) {
+                                          await widget.onEmailLogin!(
+                                              email, password);
+                                        } else {
+                                          await AuthenticationRepository(
+                                            widget.gApiKey,
+                                          ).loginEmail(email, password);
+                                        }
+                                      },
                                     ),
-                                    // SizedBox(height: 16.0),
-                                    _buildEmailTF(),
-                                    SizedBox(
-                                      height: 8.0,
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.all(16),
+                                    child: EmailSignUpFormView(
+                                      onBoardFormSignUpKey:
+                                          _onBoardFormSignUpKey,
+                                      usernameTextController:
+                                          _usernameTextController,
+                                      passwordTextController:
+                                          _passwordTextController,
+                                      repasswordTextController:
+                                          _repasswordTextController,
+                                      onEmailSignup: (email, password,
+                                          passwordReEnter) async {
+                                        // if (widget.onEmailSignup == null) {
+                                        //   // return Future.error(
+                                        //   //     'onEmailSignup functions doesn\'t exists');
+                                        //   // await AuthenticationRepository(
+                                        //   //   widget.gApiKey,
+                                        //   // ).signupEmail(
+                                        //   //     email, password, passwordReEnter);
+                                        // }
+
+                                        if (widget.onEmailSignup != null) {
+                                          await await widget.onEmailSignup!(
+                                            _usernameTextController.text,
+                                            _passwordTextController.text,
+                                            _repasswordTextController.text,
+                                          );
+                                        } else {
+                                          await AuthenticationRepository(
+                                            widget.gApiKey,
+                                          ).loginEmail(email, password);
+                                        }
+                                      },
                                     ),
-                                    _buildPasswordTF(),
-                                    SizedBox(
-                                      height: 8.0,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        _buildRememberMeCheckbox(),
-                                        _buildForgotPasswordBtn(),
-                                      ],
-                                    ),
-                                    _buildLoginBtn(),
-                                    _buildSignInWithText(),
-                                    _buildSocialBtnRow(),
-                                    _buildSignupBtn(),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
                             ),
                           ],

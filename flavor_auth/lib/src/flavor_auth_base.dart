@@ -6,6 +6,10 @@ import 'package:flavor_auth/src/models/user.dart';
 enum AuthenticationStatus { unknown, authenticated, unauthenticated }
 
 class AuthenticationRepository {
+  AuthenticationRepository(String gAPIKey) {
+    _fue = FlavorAuthEmail(googleApiKey: gAPIKey);
+  }
+
   late FlavorAuthEmail _fue;
 
   final _controller = StreamController<AuthenticationStatus>();

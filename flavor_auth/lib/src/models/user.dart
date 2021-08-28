@@ -66,7 +66,7 @@ class FlavorUser {
 
   final String? rawJson;
 
-  // final String rawUserInfo;
+  final String? rawUserInfo;
   factory FlavorUser.fromJson(Map<dynamic, dynamic> json) =>
       _$FlavorUserFromJson(json);
   Map<dynamic, dynamic> toJson() => _$FlavorUserToJson(this);
@@ -85,14 +85,14 @@ class FlavorUser {
     this.photoUrl,
     this.refreshToken,
     this.expiresIn,
-    // this.rawUserInfo,
+    this.rawUserInfo,
   });
 
   @override
   String toString() {
-    // return super.toString();
+    return super.toString();
     // return json.decode(rawJson.toString())?.toString();
-    return rawJson.toString();
+    // return rawJson.toString();
   }
 
   // static Future<FlavorUser> fromJson(dynamic json) {
