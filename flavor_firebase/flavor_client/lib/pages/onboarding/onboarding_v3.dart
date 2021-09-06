@@ -74,8 +74,7 @@ class _OnboardingV3State extends State<FlavorOnboardingV3>
   @override
   void initState() {
     super.initState();
-    _tabController =
-        TabController(vsync: this, length: myTabs.length, initialIndex: 1);
+    _tabController = TabController(vsync: this, length: myTabs.length);
   }
 
   @override
@@ -148,7 +147,11 @@ class _OnboardingV3State extends State<FlavorOnboardingV3>
                             ),
                             Container(
                               constraints: BoxConstraints(
-                                  minHeight: 340, maxHeight: 400),
+                                minHeight: 340,
+                                maxHeight: 460,
+                                minWidth: 300,
+                                maxWidth: 480,
+                              ),
                               padding: const EdgeInsets.all(8.0),
                               child: TabBarView(
                                 controller: _tabController,

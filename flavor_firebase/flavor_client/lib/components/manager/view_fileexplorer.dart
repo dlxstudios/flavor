@@ -89,10 +89,10 @@ class ManagerUploadPage extends StatelessWidget {
       );
       // print('result.files[0]:: ${result.files[0].name}');
       if (result != null) {
-        List<FlavorFile> newList = [];
+        List<FlavorLocalFile> newList = [];
         for (var i = 0; i < result.files.length; i++) {
           var p = result.files[i];
-          var ff = FlavorFile(fileInfo: p);
+          var ff = FlavorLocalFile(fileInfo: p);
           newList.add(ff);
         }
 

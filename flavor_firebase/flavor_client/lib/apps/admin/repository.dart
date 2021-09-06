@@ -40,10 +40,12 @@ class FlavorSearchService extends ChangeNotifier {
       for (var i = 0; i < snap.nbHits; i++) {
         temp.add(Track.fromJsonFS(snap.hits[i].data));
       }
-      return temp;
+      return Future.value(temp);
     }
 
-    return Future.error('error');
+    return Future.error({
+      'error': {'msg': 'empty list'}
+    });
   }
 
   bool _init = false;

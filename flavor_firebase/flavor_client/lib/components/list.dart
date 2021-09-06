@@ -134,7 +134,7 @@ class FlavorTileSection extends StatelessWidget {
         title != null
             ? Flexible(
                 flex: 0,
-                child: ClayTileHeader(
+                child: FlavorTileHeader(
                   title: title,
                 ),
               )
@@ -161,7 +161,11 @@ class FlavorTileHeader extends StatelessWidget {
             // color: Colors.red,
             child: Padding(
               padding: const EdgeInsets.only(
-                  left: 24.0, top: 8, bottom: 8, right: 24),
+                left: 8.0,
+                top: 8,
+                bottom: 8,
+                right: 8,
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,

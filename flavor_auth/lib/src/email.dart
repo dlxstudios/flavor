@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:flavor_auth/src/models/user.dart';
 import 'package:flavor_http/http.dart' as http;
 

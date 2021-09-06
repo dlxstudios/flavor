@@ -106,12 +106,14 @@ class _EmailLoginFormViewState extends State<EmailLoginFormView> {
               SizedBox(
                 height: 8.0,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _buildRememberMeCheckbox(),
-                  _buildForgotPasswordBtn(),
-                ],
+              Flexible(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Flexible(child: _buildRememberMeCheckbox()),
+                    Flexible(child: _buildForgotPasswordBtn()),
+                  ],
+                ),
               ),
               _buildLoginBtn(),
               // _buildSignInWithText(),
@@ -321,8 +323,8 @@ class _EmailLoginFormViewState extends State<EmailLoginFormView> {
             //     // fontFamily: 'OpenSans',
             //     ),
             decoration: InputDecoration(
-              border: InputBorder.none,
-              // border: OutlineInputBorder(),
+              // border: InputBorder.none,
+              border: OutlineInputBorder(),
               // contentPadding: EdgeInsets.only(top: 9.0),
               contentPadding: EdgeInsets.only(top: 14.0),
 
@@ -360,7 +362,8 @@ class _EmailLoginFormViewState extends State<EmailLoginFormView> {
             //     // fontFamily: 'OpenSans',
             //     ),
             decoration: InputDecoration(
-              border: InputBorder.none,
+              // border: InputBorder.none,
+              border: OutlineInputBorder(),
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
                 Icons.lock,
@@ -413,6 +416,7 @@ class _EmailLoginFormViewState extends State<EmailLoginFormView> {
           ),
           Text(
             'Remember me',
+            style: Theme.of(context).textTheme.bodyText2,
             // style: kLabelStyle,
           ),
         ],

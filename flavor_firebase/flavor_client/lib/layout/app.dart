@@ -15,7 +15,7 @@ class FlavorApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
-    final FlavorClientState app = ref.watch(this.appState);
+    final FlavorClientState app = ref(this.appState);
 
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,

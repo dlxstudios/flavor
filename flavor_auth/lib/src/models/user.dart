@@ -2,12 +2,13 @@ import 'package:json_annotation/json_annotation.dart';
 part 'user.g.dart';
 
 @JsonSerializable(
-    nullable: false,
-    createFactory: true,
-    createToJson: true,
-    explicitToJson: true,
-    anyMap: true,
-    checked: true)
+  nullable: false,
+  createFactory: true,
+  createToJson: true,
+  explicitToJson: true,
+  anyMap: true,
+  checked: true,
+)
 class FlavorUser {
   Map<String, String> get authHeaders {
     return <String, String>{
@@ -67,10 +68,13 @@ class FlavorUser {
   final String? rawJson;
 
   final String? rawUserInfo;
+
+  final bool? isAdmin;
   factory FlavorUser.fromJson(Map<dynamic, dynamic> json) =>
       _$FlavorUserFromJson(json);
-  Map<dynamic, dynamic> toJson() => _$FlavorUserToJson(this);
+  Map<String, Object?> toJson() => _$FlavorUserToJson(this);
   FlavorUser({
+    this.isAdmin = false,
     this.rawJson,
     this.federatedId,
     this.providerId,

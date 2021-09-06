@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flavor_client/apps/admin/repository.dart';
 import 'package:flavor_client/colors.dart';
@@ -48,7 +49,7 @@ class AppStateConsumer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
-    final FlavorClientState app = ref.watch(appProvider);
+    final FlavorClientState app = ref(appProvider);
     return consumer;
   }
 }
@@ -106,19 +107,6 @@ class FlavorClientState extends ChangeNotifier {
         }
       });
 
-  void Function(User?)? updateFireUser(_user) {
-    print('FlavorClientState.FirebaseAuth.userChanges::$user');
-    if (_user == null) return null;
-    user = FlavorUser(
-      displayName: _user.displayName,
-      email: _user.email,
-      emailVerified: _user.emailVerified,
-      photoUrl: _user.photoURL,
-      refreshToken: _user.refreshToken,
-      localId: _user.uid,
-    );
-  }
-
   get userState => FirebaseAuth.instance.currentUser != null;
 
   FlavorClientState({
@@ -126,9 +114,19 @@ class FlavorClientState extends ChangeNotifier {
     this.accentColor = const Color(0xffA16AE8),
     this.textTheme,
     required this.routes,
-    FlavorUser? user,
   }) {
-    FirebaseAuth.instance.userChanges().listen(updateFireUser);
+    FirebaseAuth.instance.userChanges().listen((_user) {
+      user = _user != null
+          ? FlavorUser(
+              displayName: _user.displayName,
+              email: _user.email,
+              emailVerified: _user.emailVerified,
+              photoUrl: _user.photoURL,
+              // refreshToken: _user.getIdToken(),
+              // localId: _user.getIdToken(),
+            )
+          : null;
+    });
 
     Hive.openBox('dlxapp').then((value) {
       hivebox = value;

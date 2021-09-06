@@ -46,7 +46,7 @@ dependencies:
     path: ../../flavor_http
   flavor_auth:
     path: ../../flavor_auth
-  flutter_riverpod: ^1.0.0-dev.6
+  flutter_riverpod: ^0.14.0+3
   # adaptive_navigation:
   velocity_x: 
   hooks_riverpod:
@@ -58,16 +58,16 @@ dependencies:
   firebase_core: ^1.5.0
   # firebase_core:
   #   path: C:/Users/dlxstudios/Desktop/Github/flutterfire/packages/firebase_core/firebase_core
-  firebase_storage:
+  firebase_storage: ^10.0.3
     # path: C:/Users/dlxstudios/Desktop/Github/flutterfire/packages/firebase_storage/firebase_storage
-  cloud_firestore: ^2.5.0
+  cloud_firestore: ^2.5.1
   permission_handler: 
   google_sign_in:
   # firebase_storage: 
   file_picker: 
   adaptive_breakpoints:
   url_strategy:
-  firebase_auth:
+  firebase_auth: ^3.1.0
   
 
 dev_dependencies:

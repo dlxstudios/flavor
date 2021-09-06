@@ -6,6 +6,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class FlavorFirestoreRepository {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
+  CollectionReference list(String path) =>
+      FirebaseFirestore.instance.collection(path);
+  void getDoc(path) => FirebaseFirestore.instance.doc(path);
+  void setDoc(path, data) => {FirebaseFirestore.instance.doc(path).set(data)};
+
   FutureOr<DocumentReference> add(String collection,
       {Map<String, dynamic> data = const {}}) {
     CollectionReference ref = FirebaseFirestore.instance.collection(collection);

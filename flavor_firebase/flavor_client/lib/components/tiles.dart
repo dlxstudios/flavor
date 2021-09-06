@@ -392,9 +392,10 @@ class FlavorCardTile extends StatelessWidget {
     _childrenSeperated.add(
       Expanded(
         child: Card(
-          elevation: 0,
           margin: EdgeInsets.all(0),
-          shape: Border.all(width: 0, color: Colors.transparent),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(borderRadius),
+          ),
           color: color,
           child: Stack(
             fit: StackFit.expand,
@@ -412,7 +413,7 @@ class FlavorCardTile extends StatelessWidget {
               Material(
                 elevation: 0,
                 borderOnForeground: true,
-                borderRadius: BorderRadius.zero,
+                borderRadius: BorderRadius.circular(borderRadius),
                 color: Colors.transparent,
                 clipBehavior: Clip.antiAlias,
                 child: InkWell(
@@ -429,10 +430,13 @@ class FlavorCardTile extends StatelessWidget {
       _childrenSeperated.add(_buildFooterListTile());
     }
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: _childrenSeperated,
+    return Container(
+      padding: padding,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: _childrenSeperated,
+      ),
     );
   }
 
@@ -494,7 +498,11 @@ class FlavorCardTile extends StatelessWidget {
 
     _childrenStacked.add(
       Card(
-        shape: Border.all(width: 0, color: Colors.transparent),
+        // shape: Border.all(width: 5, color: Colors.red),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(borderRadius),
+        ),
+
         color: color,
         child: Stack(
           fit: StackFit.expand,
@@ -509,7 +517,7 @@ class FlavorCardTile extends StatelessWidget {
                   : body,
             ),
             Material(
-              borderRadius: BorderRadius.zero,
+              borderRadius: BorderRadius.circular(borderRadius),
               elevation: 0,
               borderOnForeground: true,
               color: Colors.transparent,
@@ -549,10 +557,11 @@ class FlavorListTile extends StatelessWidget {
     return ListTile(
       contentPadding: EdgeInsets.all(0),
       title: title != null
-          ? FlavorText.headline6(
+          ? FlavorText.bodyText2(
               context,
               title!,
               maxLines: 1,
+              // overflow: TextOverflow.ellipsis,
             )
           : null,
       subtitle: subtitle != null

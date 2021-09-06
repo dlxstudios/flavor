@@ -39,9 +39,10 @@ class _EmailSignUpFormViewState extends State<EmailSignUpFormView> {
     try {
       // await Future.delayed(Duration(seconds: 2));
       await widget.onEmailSignup!(
-              widget.usernameTextController!.text,
-              widget.passwordTextController!.text,
-              widget.usernameTextController!.text)
+        widget.usernameTextController!.text,
+        widget.passwordTextController!.text,
+        widget.usernameTextController!.text,
+      )
           .catchError((error) {
         // showSnackBarError(error);
         setState(() {
@@ -97,7 +98,8 @@ class _EmailSignUpFormViewState extends State<EmailSignUpFormView> {
                     //     .textTheme
                     //     .headline5!
                     //     .copyWith(color: Colors.white),
-                    isDense: true,
+                    // isDense: true,
+                    border: OutlineInputBorder(),
                   ),
                 ),
                 SizedBox(
@@ -130,11 +132,12 @@ class _EmailSignUpFormViewState extends State<EmailSignUpFormView> {
                     //     .headline5!
                     //     .copyWith(color: Colors.white),
                     isDense: true,
-                    border: const UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.red,
-                      ),
-                    ),
+                    // border: const UnderlineInputBorder(
+                    //   borderSide: BorderSide(
+                    //     color: Colors.red,
+                    //   ),
+                    // ),
+                    border: OutlineInputBorder(),
                   ),
                 ),
 
@@ -166,11 +169,12 @@ class _EmailSignUpFormViewState extends State<EmailSignUpFormView> {
                     //     .headline5!
                     //     .copyWith(color: Colors.white),
                     isDense: true,
-                    border: const UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.red,
-                      ),
-                    ),
+                    // border: const UnderlineInputBorder(
+                    //   borderSide: BorderSide(
+                    //     color: Colors.red,
+                    //   ),
+                    // ),
+                    border: OutlineInputBorder(),
                   ),
                 ),
                 SizedBox(
@@ -240,10 +244,7 @@ class _EmailSignUpFormViewState extends State<EmailSignUpFormView> {
                               }
                             },
                       child: Text('Signup',
-                          style: Theme.of(context)
-                              .textTheme
-                              .button!
-                              .copyWith(color: Colors.white)),
+                          style: Theme.of(context).textTheme.button!),
                     )
                   ],
                 )

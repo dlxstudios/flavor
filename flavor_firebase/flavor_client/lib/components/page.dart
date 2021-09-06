@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flavor_client/components/component.dart';
 import 'package:flavor_client/components/list.dart';
-import 'package:flavor_client/layout/FlavorResponsiveView.dart';
-import 'package:flavor_client/layout/adaptive.dart';
 import 'package:flavor_client/repository/firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -443,11 +441,11 @@ class FlavorPageView extends StatelessWidget {
       // color: Colors.teal,
       child: SingleChildScrollView(
         controller: _controller,
-        child: Column(
-          mainAxisAlignment: mainAxisAlignment,
-          crossAxisAlignment: crossAxisAlignment,
-          children: children ?? [],
-        ),
+        // child: Column(
+        //   mainAxisAlignment: mainAxisAlignment,
+        //   crossAxisAlignment: crossAxisAlignment,
+        //   children: children ?? [],
+        // ),
       ),
     );
   }
