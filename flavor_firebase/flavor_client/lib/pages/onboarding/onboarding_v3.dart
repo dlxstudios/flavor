@@ -44,15 +44,9 @@ class _OnboardingV3State extends State<FlavorOnboardingV3>
 
   final _onBoardFormLoginKey = GlobalKey<FormState>();
   final _onBoardFormSignUpKey = GlobalKey<FormState>();
-  final _passwordTextController = TextEditingController(
-    text: 'Rocky0813!',
-  );
-  final _repasswordTextController = TextEditingController(
-    text: 'Rocky0813!',
-  );
-  final _usernameTextController = TextEditingController(
-    text: 'losbetosllc@gmail.com',
-  );
+  final _passwordTextController = TextEditingController();
+  final _repasswordTextController = TextEditingController();
+  final _usernameTextController = TextEditingController();
 
   GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
 
@@ -138,10 +132,10 @@ class _OnboardingV3State extends State<FlavorOnboardingV3>
                             SizedBox(
                               height: 24,
                             ),
-                            AspectRatio(
-                              aspectRatio: 4,
-                              child: Image.asset('assets/images/logo.png'),
-                            ),
+                            // AspectRatio(
+                            //   aspectRatio: 4,
+                            //   child: Image.asset('assets/images/logo.png'),
+                            // ),
                             SizedBox(
                               height: 36,
                             ),
