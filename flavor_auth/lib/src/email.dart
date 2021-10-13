@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flavor_auth/src/models/user.dart';
 import 'package:flavor_http/http.dart' as http;
 
@@ -31,7 +32,7 @@ class FlavorAuthEmail {
       var response = await http.postJson(url, body);
 
       if (response != null) {
-        var newUserAuth = await FlavorUser.fromJson(response);
+        var newUserAuth = await FlavorUser.fromMap(response);
         // print(newUserAuth);
         return newUserAuth;
       } else {
@@ -60,7 +61,7 @@ class FlavorAuthEmail {
       var response = await http.postJson(url, body);
 
       if (response != null) {
-        var newUserAuth = await FlavorUser.fromJson(response);
+        var newUserAuth = await FlavorUser.fromMap(response);
         print(newUserAuth);
         return newUserAuth;
       } else {
@@ -105,7 +106,7 @@ class FlavorAuthEmail {
           .postJson(url, body, headers: {'Content-Type': 'application/json'});
 
       if (response != null) {
-        var newUserAuth = await FlavorUser.fromJson(response);
+        var newUserAuth = await FlavorUser.fromMap(response);
         print(newUserAuth);
         return newUserAuth;
       } else {

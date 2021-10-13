@@ -1,14 +1,16 @@
-import 'package:json_annotation/json_annotation.dart';
-part 'user.g.dart';
+import 'dart:convert';
 
-@JsonSerializable(
-  nullable: false,
-  createFactory: true,
-  createToJson: true,
-  explicitToJson: true,
-  anyMap: true,
-  checked: true,
-)
+// import 'package:json_annotation/json_annotation.dart';
+
+// part 'user.g.dart';
+
+// @JsonSerializable(
+//     nullable: false,
+//     createFactory: true,
+//     createToJson: true,
+//     explicitToJson: true,
+//     anyMap: true,
+//     checked: true)
 class FlavorUser {
   Map<String, String> get authHeaders {
     return <String, String>{
@@ -52,6 +54,7 @@ class FlavorUser {
   /// [email]	string
   /// The email for the newly created user.
   final String? email;
+  final String? phoneNumber = '0000000000';
 
   /// [refreshToken]	string
   /// An Identity Platform refresh token for the newly created user.
@@ -67,36 +70,31 @@ class FlavorUser {
 
   final String? rawJson;
 
-  final String? rawUserInfo;
-
-  final bool? isAdmin;
-  factory FlavorUser.fromJson(Map<dynamic, dynamic> json) =>
-      _$FlavorUserFromJson(json);
-  Map<String, Object?> toJson() => _$FlavorUserToJson(this);
+  // final String rawUserInfo;
+  // factory FlavorUser.fromJson(Map<String, dynamic> json) =>
+  //     _$FlavorUserFromJson(json);
+  // Map<dynamic, dynamic> toJson() => _$FlavorUserToJson(this);
   FlavorUser({
-    this.isAdmin = false,
-    this.rawJson,
+    // this.rawUserInfo,
     this.federatedId,
     this.providerId,
-    this.localId,
     this.emailVerified,
-    this.email,
     this.oauthAccessToken,
     this.firstName,
     this.lastName,
     this.displayName,
-    this.idToken,
     this.photoUrl,
+    this.idToken,
+    this.email,
     this.refreshToken,
     this.expiresIn,
-    this.rawUserInfo,
+    this.localId,
+    this.rawJson,
   });
 
   @override
   String toString() {
-    return super.toString();
-    // return json.decode(rawJson.toString())?.toString();
-    // return rawJson.toString();
+    return 'FlavorUser(federatedId: $federatedId, providerId: $providerId, emailVerified: $emailVerified, oauthAccessToken: $oauthAccessToken, firstName: $firstName, lastName: $lastName, displayName: $displayName, photoUrl: $photoUrl, idToken: $idToken, email: $email, refreshToken: $refreshToken, expiresIn: $expiresIn, localId: $localId, rawJson: $rawJson)';
   }
 
   // static Future<FlavorUser> fromJson(dynamic json) {
@@ -118,4 +116,120 @@ class FlavorUser {
   //     ),
   //   );
   // }
+
+  FlavorUser copyWith({
+    String? federatedId,
+    String? providerId,
+    bool? emailVerified,
+    String? oauthAccessToken,
+    String? firstName,
+    String? lastName,
+    String? displayName,
+    String? photoUrl,
+    String? idToken,
+    String? email,
+    String? refreshToken,
+    String? expiresIn,
+    String? localId,
+    String? rawJson,
+  }) {
+    return FlavorUser(
+      federatedId: federatedId ?? this.federatedId,
+      providerId: providerId ?? this.providerId,
+      emailVerified: emailVerified ?? this.emailVerified,
+      oauthAccessToken: oauthAccessToken ?? this.oauthAccessToken,
+      firstName: firstName ?? this.firstName,
+      lastName: lastName ?? this.lastName,
+      displayName: displayName ?? this.displayName,
+      photoUrl: photoUrl ?? this.photoUrl,
+      idToken: idToken ?? this.idToken,
+      email: email ?? this.email,
+      refreshToken: refreshToken ?? this.refreshToken,
+      expiresIn: expiresIn ?? this.expiresIn,
+      localId: localId ?? this.localId,
+      rawJson: rawJson ?? this.rawJson,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'federatedId': federatedId,
+      'providerId': providerId,
+      'emailVerified': emailVerified,
+      'oauthAccessToken': oauthAccessToken,
+      'firstName': firstName,
+      'lastName': lastName,
+      'displayName': displayName,
+      'photoUrl': photoUrl,
+      'idToken': idToken,
+      'email': email,
+      'refreshToken': refreshToken,
+      'expiresIn': expiresIn,
+      'localId': localId,
+      'rawJson': rawJson,
+    };
+  }
+
+  factory FlavorUser.fromMap(Map<String, dynamic> map) {
+    return FlavorUser(
+      federatedId: map['federatedId'],
+      providerId: map['providerId'],
+      emailVerified: map['emailVerified'],
+      oauthAccessToken: map['oauthAccessToken'],
+      firstName: map['firstName'],
+      lastName: map['lastName'],
+      displayName: map['displayName'],
+      photoUrl: map['photoUrl'],
+      idToken: map['idToken'],
+      email: map['email'],
+      refreshToken: map['refreshToken'],
+      expiresIn: map['expiresIn'],
+      localId: map['localId'],
+      rawJson: map['rawJson'],
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory FlavorUser.fromJson(String source) =>
+      FlavorUser.fromMap(json.decode(source));
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is FlavorUser &&
+        other.federatedId == federatedId &&
+        other.providerId == providerId &&
+        other.emailVerified == emailVerified &&
+        other.oauthAccessToken == oauthAccessToken &&
+        other.firstName == firstName &&
+        other.lastName == lastName &&
+        other.displayName == displayName &&
+        other.photoUrl == photoUrl &&
+        other.idToken == idToken &&
+        other.email == email &&
+        other.refreshToken == refreshToken &&
+        other.expiresIn == expiresIn &&
+        other.localId == localId &&
+        other.rawJson == rawJson;
+  }
+
+  @override
+  int get hashCode {
+    return federatedId.hashCode ^
+        providerId.hashCode ^
+        emailVerified.hashCode ^
+        oauthAccessToken.hashCode ^
+        firstName.hashCode ^
+        lastName.hashCode ^
+        displayName.hashCode ^
+        photoUrl.hashCode ^
+        idToken.hashCode ^
+        email.hashCode ^
+        refreshToken.hashCode ^
+        expiresIn.hashCode ^
+        localId.hashCode ^
+        rawJson.hashCode;
+  }
 }
