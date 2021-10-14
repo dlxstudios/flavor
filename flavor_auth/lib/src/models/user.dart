@@ -1,16 +1,5 @@
 import 'dart:convert';
 
-// import 'package:json_annotation/json_annotation.dart';
-
-// part 'user.g.dart';
-
-// @JsonSerializable(
-//     nullable: false,
-//     createFactory: true,
-//     createToJson: true,
-//     explicitToJson: true,
-//     anyMap: true,
-//     checked: true)
 class FlavorUser {
   Map<String, String> get authHeaders {
     return <String, String>{
@@ -34,6 +23,8 @@ class FlavorUser {
   // "expiresIn": "3600",
   // "rawUserInfo": "{\"updated_time\":\"2017-02-22T01:10:57+0000\",\"gender\":\"male\"}"""}
 
+  final bool? isAnonymous;
+
   final String? federatedId;
   final String? providerId;
 
@@ -54,7 +45,7 @@ class FlavorUser {
   /// [email]	string
   /// The email for the newly created user.
   final String? email;
-  final String? phoneNumber = '0000000000';
+  final String? phoneNumber;
 
   /// [refreshToken]	string
   /// An Identity Platform refresh token for the newly created user.
@@ -70,12 +61,9 @@ class FlavorUser {
 
   final String? rawJson;
 
-  // final String rawUserInfo;
-  // factory FlavorUser.fromJson(Map<String, dynamic> json) =>
-  //     _$FlavorUserFromJson(json);
-  // Map<dynamic, dynamic> toJson() => _$FlavorUserToJson(this);
   FlavorUser({
     // this.rawUserInfo,
+    this.isAnonymous = false,
     this.federatedId,
     this.providerId,
     this.emailVerified,
@@ -86,38 +74,15 @@ class FlavorUser {
     this.photoUrl,
     this.idToken,
     this.email,
+    this.phoneNumber,
     this.refreshToken,
     this.expiresIn,
     this.localId,
     this.rawJson,
   });
 
-  @override
-  String toString() {
-    return 'FlavorUser(federatedId: $federatedId, providerId: $providerId, emailVerified: $emailVerified, oauthAccessToken: $oauthAccessToken, firstName: $firstName, lastName: $lastName, displayName: $displayName, photoUrl: $photoUrl, idToken: $idToken, email: $email, refreshToken: $refreshToken, expiresIn: $expiresIn, localId: $localId, rawJson: $rawJson)';
-  }
-
-  // static Future<FlavorUser> fromJson(dynamic json) {
-  //   var data;
-  //   try {
-  //     data = json.decode(json);
-  //   } catch (e) {
-  //     return Future.error(e);
-  //   }
-
-  //   return Future.value(
-  //     FlavorUser(
-  //       email: data['email'],
-  //       idToken: data['idToken'],
-  //       expiresIn: data['expiresIn'],
-  //       localId: data['localId'],
-  //       refreshToken: data['refreshToken'],
-  //       rawJson: data,
-  //     ),
-  //   );
-  // }
-
   FlavorUser copyWith({
+    bool? isAnonymous,
     String? federatedId,
     String? providerId,
     bool? emailVerified,
@@ -128,12 +93,14 @@ class FlavorUser {
     String? photoUrl,
     String? idToken,
     String? email,
+    String? phoneNumber,
     String? refreshToken,
     String? expiresIn,
     String? localId,
     String? rawJson,
   }) {
     return FlavorUser(
+      isAnonymous: isAnonymous ?? this.isAnonymous,
       federatedId: federatedId ?? this.federatedId,
       providerId: providerId ?? this.providerId,
       emailVerified: emailVerified ?? this.emailVerified,
@@ -144,6 +111,7 @@ class FlavorUser {
       photoUrl: photoUrl ?? this.photoUrl,
       idToken: idToken ?? this.idToken,
       email: email ?? this.email,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
       refreshToken: refreshToken ?? this.refreshToken,
       expiresIn: expiresIn ?? this.expiresIn,
       localId: localId ?? this.localId,
@@ -153,6 +121,7 @@ class FlavorUser {
 
   Map<String, dynamic> toMap() {
     return {
+      'isAnonymous': isAnonymous,
       'federatedId': federatedId,
       'providerId': providerId,
       'emailVerified': emailVerified,
@@ -163,6 +132,7 @@ class FlavorUser {
       'photoUrl': photoUrl,
       'idToken': idToken,
       'email': email,
+      'phoneNumber': phoneNumber,
       'refreshToken': refreshToken,
       'expiresIn': expiresIn,
       'localId': localId,
@@ -172,6 +142,7 @@ class FlavorUser {
 
   factory FlavorUser.fromMap(Map<String, dynamic> map) {
     return FlavorUser(
+      isAnonymous: map['isAnonymous'],
       federatedId: map['federatedId'],
       providerId: map['providerId'],
       emailVerified: map['emailVerified'],
@@ -182,6 +153,7 @@ class FlavorUser {
       photoUrl: map['photoUrl'],
       idToken: map['idToken'],
       email: map['email'],
+      phoneNumber: map['phoneNumber'],
       refreshToken: map['refreshToken'],
       expiresIn: map['expiresIn'],
       localId: map['localId'],
@@ -195,10 +167,16 @@ class FlavorUser {
       FlavorUser.fromMap(json.decode(source));
 
   @override
+  String toString() {
+    return 'FlavorUser(isAnonymous: $isAnonymous, federatedId: $federatedId, providerId: $providerId, emailVerified: $emailVerified, oauthAccessToken: $oauthAccessToken, firstName: $firstName, lastName: $lastName, displayName: $displayName, photoUrl: $photoUrl, idToken: $idToken, email: $email, phoneNumber: $phoneNumber, refreshToken: $refreshToken, expiresIn: $expiresIn, localId: $localId, rawJson: $rawJson)';
+  }
+
+  @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
     return other is FlavorUser &&
+        other.isAnonymous == isAnonymous &&
         other.federatedId == federatedId &&
         other.providerId == providerId &&
         other.emailVerified == emailVerified &&
@@ -209,6 +187,7 @@ class FlavorUser {
         other.photoUrl == photoUrl &&
         other.idToken == idToken &&
         other.email == email &&
+        other.phoneNumber == phoneNumber &&
         other.refreshToken == refreshToken &&
         other.expiresIn == expiresIn &&
         other.localId == localId &&
@@ -217,7 +196,8 @@ class FlavorUser {
 
   @override
   int get hashCode {
-    return federatedId.hashCode ^
+    return isAnonymous.hashCode ^
+        federatedId.hashCode ^
         providerId.hashCode ^
         emailVerified.hashCode ^
         oauthAccessToken.hashCode ^
@@ -227,6 +207,7 @@ class FlavorUser {
         photoUrl.hashCode ^
         idToken.hashCode ^
         email.hashCode ^
+        phoneNumber.hashCode ^
         refreshToken.hashCode ^
         expiresIn.hashCode ^
         localId.hashCode ^

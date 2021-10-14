@@ -13,7 +13,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class SettingsConsumer extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
-    final adminState = ref(flavorAdminStateProvider);
+    final adminState = ref.watch(flavorAdminStateProvider);
     var controller = ScrollController();
     // flavorAdminStateProvider.select((value) => null);
     // final age = watch(personProvider.select((p) => p.age));

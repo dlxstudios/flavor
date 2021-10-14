@@ -10,7 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class FlavorAdminAppView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
-    final adminState = ref(flavorAdminStateProvider);
+    final adminState = ref.watch(flavorAdminStateProvider);
 
     Route onGenerateRoute(RouteSettings settings) {
       var path;

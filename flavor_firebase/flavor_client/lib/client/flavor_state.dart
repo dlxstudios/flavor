@@ -49,7 +49,7 @@ class AppStateConsumer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
-    final FlavorClientState app = ref(appProvider);
+    final FlavorClientState app = ref.watch(appProvider);
     return consumer;
   }
 }

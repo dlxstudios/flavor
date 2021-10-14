@@ -16,7 +16,6 @@ class FlavorOnboardingV3 extends StatefulWidget {
   final Widget? flexiableSpace;
   final ThemeData? themeData;
   //
-  final String gApiKey;
 
   final bool isLoggedIn;
 
@@ -29,7 +28,6 @@ class FlavorOnboardingV3 extends StatefulWidget {
     this.description,
     this.flexiableSpace,
     this.themeData,
-    required this.gApiKey,
     this.isLoggedIn = false,
   }) : super(key: key);
 
@@ -165,9 +163,8 @@ class _OnboardingV3State extends State<FlavorOnboardingV3>
                                           await widget.onEmailLogin!(
                                               email, password);
                                         } else {
-                                          await AuthenticationRepository(
-                                            widget.gApiKey,
-                                          ).loginEmail(email, password);
+                                          await AuthenticationRepository()
+                                              .loginEmail(email, password);
                                         }
                                       },
                                     ),
@@ -201,9 +198,8 @@ class _OnboardingV3State extends State<FlavorOnboardingV3>
                                             _repasswordTextController.text,
                                           );
                                         } else {
-                                          await AuthenticationRepository(
-                                            widget.gApiKey,
-                                          ).loginEmail(email, password);
+                                          await AuthenticationRepository()
+                                              .loginEmail(email, password);
                                         }
                                       },
                                     ),
