@@ -1,0 +1,13 @@
+
+App build size
+    flavor
+        file : 64.2 MB (67,403,776 bytes)
+        memory : 25.6 MB
+
+    cupertino
+        file : 63.7 MB (66,879,488 bytes)
+        memory : 25.5 MB
+
+    material
+        file : 64.1 MB (67,272,704 bytes)
+        memory : 26.3 MB
