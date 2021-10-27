@@ -1,7 +1,6 @@
 import 'package:css_colors/css_colors.dart';
-import 'package:flavor_app/features/card/card_box.dart';
-import 'package:flavor_app/features/scaffold/scaffold.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flavor_ui/flavor_ui.dart';
 
 class FlavorPageError extends StatelessWidget {
   final String message;

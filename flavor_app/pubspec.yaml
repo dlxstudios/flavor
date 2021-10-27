@@ -25,6 +25,8 @@ dependencies:
   regex_router: ^2.0.0
   shimmer: ^2.0.0
   url_strategy: ^0.2.0
+  flavor_ui:
+    path: ../flavor_ui
 
 dev_dependencies:
   build_runner: null

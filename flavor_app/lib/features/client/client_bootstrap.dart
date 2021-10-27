@@ -1,7 +1,12 @@
 import 'package:flavor_app/features/client/client.dart';
+import 'package:flavor_app/features/client/client_model.dart';
 import 'package:flavor_app/features/splash/splash_screen.dart';
+import 'package:flavor_app/test_flavor_app_1.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
+
+var testApp = testFlavorApp1;
+var app = FlavorAppClientModel.fromMap(testApp);
 
 class FlavorClientBootStrap extends StatelessWidget {
   const FlavorClientBootStrap({

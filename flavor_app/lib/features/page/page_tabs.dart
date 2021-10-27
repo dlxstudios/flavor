@@ -6,7 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_remix/flutter_remix.dart';
 
 import 'package:flavor_app/features/page/page_error.dart';
-import 'package:flavor_app/features/scaffold/scaffold.dart';
+import 'package:flavor_ui/flavor_ui.dart';
 
 class ScreenPageTabs extends StatelessWidget {
   ScreenPageTabs({Key? key, required this.tabs}) : super(key: key);

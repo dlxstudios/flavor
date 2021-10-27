@@ -1,14 +1,9 @@
 import 'dart:convert';
 
-import 'package:css_colors/css_colors.dart';
+import 'package:flavor_ui/flavor_ui.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
-import 'package:flavor_app/features/button/button.dart';
-import 'package:flavor_app/features/card/card_box.dart';
-import 'package:flavor_app/features/list/list.dart';
-import 'package:flavor_app/features/list_tile/list_tile.dart';
-import 'package:flavor_app/features/page/page.dart';
 import 'package:flavor_app/features/page/page_error.dart';
 
 class FlavorComponentView extends StatelessWidget {
@@ -26,14 +21,18 @@ class FlavorComponentView extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget? _child = child;
 
-    return Container(
-      color: CSSColors.gold,
-      padding: const EdgeInsets.all(16),
-      child: Container(
-        color: CSSColors.red,
-        child: _child,
-      ),
-    );
+    return model != null ? model!.widget : _child ?? Container();
+
+    // print('model::$model');
+
+    // return Container(
+    //   // color: CSSColors.gold,
+    //   // padding: const EdgeInsets.all(16),
+    //   child: Container(
+    //     // color: CSSColors.red,
+    //     child: model != null ? model!.widget : _child,
+    //   ),
+    // );
   }
 }
 
@@ -71,7 +70,7 @@ class FlavorComponentModel {
 
   Map<String, dynamic> toMap() {
     return {
-      'type': type,
+      '_type': type,
       'name': name,
       'data': data,
       // 'widget': widget?.toMap(),
@@ -80,9 +79,9 @@ class FlavorComponentModel {
 
   factory FlavorComponentModel.fromMap(Map<String, dynamic> map) {
     return FlavorComponentModel(
-      type: map['type'],
+      type: map['_type'],
       name: map['name'],
-      // data: map,
+      data: map,
       // Widget.fromMap(map['widget']),
     );
   }
@@ -114,27 +113,40 @@ class FlavorComponentModel {
   }
 }
 
-Map<String, Type> flavorComponentsMap = {
-  'com.flavor.text': Text,
-  'com.flavor.cardbox': CardBox,
-  'com.flavor.list': FlavorList,
-  'com.flavor.page': FlavorPage,
-  'com.flavor.button': FlavorButton,
+Map<String, Function(Map<String, dynamic> data)> flavorComponentsMap = {
+  'com.flavor.text': (Map<String, dynamic> data) => FlavorText.fromMap(data),
+  // 'com.flavor.cardbox': CardBox,
+  // 'com.flavor.list': FlavorList,
+  // 'com.flavor.page': FlavorPage,
+  // 'com.flavor.button': FlavorButton,
 };
 
 Widget _processWidget(Map<dynamic, dynamic> data) {
-  print('_processWidget::');
-  // String type = data.containsKey('_type') ? data['_type'] : null;
+  data = data as Map<String, dynamic>;
+  print('_processWidget::$data');
+  String type = data.containsKey('_type') ? data['_type'] : null;
+
+  // if (!type.isEmpty)
+  //   for (var value in flavorComponentsMap.entries) {
+  //     print('value.runtimeType::${value.value}');
+  //   }
+
+  var exist = flavorComponentsMap.containsKey(type);
+
+  if (exist) {
+    var obj = flavorComponentsMap[type];
+    return flavorComponentsMap.entries.singleWhere((element) {
+      print('element.key::${element.key}::type::$type');
+      return element.key == type;
+    }).value(data);
+  }
   return Container(
     padding: const EdgeInsets.all(16),
     child: const Center(
       child: Text('No Components'),
     ),
   );
-  // if (type.isEmpty)
-  //   for (var value in flavorComponentsMap.entries) {
-  //     print('value.runtimeType::${value.value}');
-  //   }
+
   // switch (type) {
   //   case 'text':
   //     return Text(data['text']);

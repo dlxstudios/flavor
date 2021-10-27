@@ -1,8 +1,33 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flavor_ui/flavor_ui.dart' show FlavorScaffold;
+import 'package:flutter/material.dart'
+    show
+        AnnotatedRegion,
+        BuildContext,
+        Color,
+        CustomScrollView,
+        Key,
+        SafeArea,
+        ScrollController,
+        SliverChildListDelegate,
+        SliverList,
+        StatelessWidget,
+        Widget;
+import 'package:flutter/services.dart' show SystemUiOverlayStyle;
+import 'package:flutter/widgets.dart'
+    show
+        AnnotatedRegion,
+        BuildContext,
+        Color,
+        CustomScrollView,
+        Key,
+        SafeArea,
+        ScrollController,
+        SliverChildListDelegate,
+        SliverList,
+        StatelessWidget,
+        Widget;
 
 import 'package:flavor_app/features/component/component.dart';
 import 'package:flavor_app/features/page/page_error.dart';
@@ -64,26 +89,26 @@ class FlavorPage extends StatelessWidget {
   }
 
   _buildBody() {
-    return Container(
-      color: Colors.amber,
-      // child: CustomScrollView(
-      //   cacheExtent: 100,
-      //   controller: _scrollController,
-      //   slivers: [
-      //     SliverList(
-      //       delegate: SliverChildListDelegate(
-      //         model.components!
-      //             .map(
-      //               (e) => FlavorComponentView(
-      //                 model: e,
-      //               ),
-      //               // controller: _scrollController,
-      //             )
-      //             .toList(),
-      //       ),
-      //     )
-      //   ],
-      // ),
+    return FlavorScaffold(
+      // color: Colors.amber,
+      child: CustomScrollView(
+        cacheExtent: 100,
+        controller: _scrollController,
+        slivers: [
+          SliverList(
+            delegate: SliverChildListDelegate(
+              model.components!
+                  .map(
+                    (e) => FlavorComponentView(
+                      model: e,
+                    ),
+                    // controller: _scrollController,
+                  )
+                  .toList(),
+            ),
+          )
+        ],
+      ),
     );
   }
 }
@@ -205,12 +230,19 @@ class FlavorPageModel {
   }
 }
 
-List<FlavorComponentModel>? processComponents(componentsJson) {
-  print('componentsJson::$componentsJson');
+List<FlavorComponentModel>? processComponents(
+    List<Map<String, dynamic>> componentsJson) {
+  // print('componentsJson::$componentsJson');
+  // componentsJson.map((e) => print('e::$e')).toList();
+  List<FlavorComponentModel> components;
+  try {
+    components =
+        componentsJson.map((e) => FlavorComponentModel.fromMap(e)).toList();
+  } catch (e) {
+    print(componentsJson);
+    print(e);
+    components = [];
+  }
 
-  List<FlavorComponentModel> components =
-      componentsJson.map((e) => FlavorComponentModel.fromMap(e)).toList();
-
-  print(components);
-  return [];
+  return components;
 }

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:css_colors/css_colors.dart';
-import 'package:flavor_app/features/colors/colors.dart';
-import 'package:flavor_app/features/theme/theme_defaults.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 

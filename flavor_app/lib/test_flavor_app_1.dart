@@ -23,9 +23,12 @@ var testFlavorApp1 = {
       'path': '/page2',
       '_type': 'com.flavor.page',
       'title': 'Home Page',
-      'components': [{}]
+      // 'components': []
     }
   ],
+  // 'theme': {
+  //   '_type': 'com.flavor.theme',
+  // },
   "plugins": [
     "settings",
     "login",

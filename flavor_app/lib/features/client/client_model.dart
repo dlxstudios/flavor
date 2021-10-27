@@ -1,7 +1,9 @@
 import 'dart:convert';
-import 'package:flavor_app/features/page/page.dart';
+
+import 'package:flavor_ui/flavor_ui.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flavor_app/features/theme/theme_data.dart';
+
+import 'package:flavor_app/features/page/page.dart';
 
 class FlavorAppClientModel {
   FlavorAppClientModel({

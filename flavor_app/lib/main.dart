@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flavor_app/cup_app.dart';
-import 'package:flavor_app/fcup.dart';
 import 'package:flavor_app/features/client/client_bootstrap.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
@@ -39,18 +38,17 @@ void startCupClient() {
   runApp(const CupApp());
 }
 
-void main(List<String> args) {
+void main() {
+  // List<String>
   WidgetsFlutterBinding.ensureInitialized();
   if (kIsWeb) {
     setPathUrlStrategy();
   }
 
   print('Starting App');
-  print('args::$args');
+  // print('args::$args');
 
   // startCupClient();
   // startMaterialClient();
-  // startClient();
-
-  runApp(const FCup());
+  startClient();
 }

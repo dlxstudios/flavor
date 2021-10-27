@@ -1,15 +1,20 @@
 import 'dart:async';
 
-import 'package:flavor_app/features/home/home_screen.dart';
-import 'package:flavor_app/features/colors/colors.dart';
-import 'package:flavor_app/features/client/client_model.dart';
-import 'package:flavor_app/features/theme/theme.dart';
+import 'package:flavor_ui/flavor_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:regex_router/regex_router.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import 'package:flavor_app/features/client/client_model.dart';
+import 'package:flavor_app/features/page/page.dart';
+import 'package:flavor_app/features/page/page_error.dart';
+import 'package:flavor_app/test_flavor_app_1.dart';
+
+var testApp = testFlavorApp1;
+var app = FlavorAppClientModel.fromMap(testApp);
 
 class FlavorClientData {}
 
@@ -28,29 +33,10 @@ class FlavorClient extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final RegexRouter router = RegexRouter.create({
-      // "/": (context, _) => ScreenPageTabs.fromPageTabData({
-      //       'tabs': [
-      //         {
-      //           "type": 'flavor.page.tab',
-      //           'text': 'Home',
-      //           'icon': 'home',
-      //           'page': {
-      //             'title': 'Tab Page 1',
-      //             'components': [],
-      //             'type': 'flavor.page',
-      //           },
-      //         }
-      //       ],
-      //     }),
-      "/": (context, _) => const ScreenHome(),
-      // SettingsView.routeName: (context, args) => SampleItemListView(),
-      // SampleItemDetailsView.routeName: (context, args) => SampleItemDetailsView(),
-    });
-
     return Focus(
       canRequestFocus: false,
       onKey: (FocusNode node, RawKeyEvent event) {
+        // print(event);
         if (event is! RawKeyDownEvent ||
             event.logicalKey != LogicalKeyboardKey.escape) {
           return KeyEventResult.ignored;
@@ -65,9 +51,9 @@ class FlavorClient extends StatelessWidget {
           title: 'App',
           restorationScopeId: 'app',
           debugShowCheckedModeBanner: false,
-          color: FlavorColor(FlavorColors.red).value,
+          color: FlavorColor(colorValue: FlavorColors.red).value,
           // color: _themeStateController.theme.primaryColor!,
-          onGenerateRoute: router.generateRoute,
+          onGenerateRoute: computeRouter(app.pages),
           localizationsDelegates: const [
             AppLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
@@ -83,4 +69,27 @@ class FlavorClient extends StatelessWidget {
       ),
     );
   }
+}
+
+Route<dynamic>? Function(RouteSettings)? computeRouter(
+    List<FlavorPageModel>? pages) {
+  if (pages == null && pages!.isEmpty) {
+    return RegexRouter.create({
+      '/': (context, ds) => FlavorPageError(
+            message: 'no pages for app ',
+            code: 404.toString(),
+          )
+    }).generateRoute;
+  }
+
+  Map<String, Widget Function(BuildContext, RouteArgs)> routeMap = {};
+
+  // print('object::$pages');
+
+  pages.map((e) {
+    // print('path::${e.path}');
+    routeMap.addAll({e.path!: (context, ds) => FlavorPage(e)});
+  }).toList();
+
+  return RegexRouter.create(routeMap).generateRoute;
 }

@@ -197,6 +197,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
+  flavor_storage:
+    dependency: transitive
+    description:
+      path: "../flavor_storage"
+      relative: true
+    source: path
+    version: "0.0.1"
+  flavor_ui:
+    dependency: "direct main"
+    description:
+      path: "../flavor_ui"
+      relative: true
+    source: path
+    version: "0.0.1"
   flutter:
     dependency: "direct main"
     description: flutter

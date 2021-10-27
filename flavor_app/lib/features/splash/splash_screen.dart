@@ -1,4 +1,4 @@
-import 'package:flavor_app/features/colors/colors.dart';
+import 'package:flavor_ui/flavor_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 
