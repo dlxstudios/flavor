@@ -11,3 +11,5 @@ export 'package:flavor_ui/src/text/text_theme.dart';
 export 'package:flavor_ui/src/list_tile/list_tile.dart';
 export 'package:flavor_ui/src/scaffold/scaffold.dart';
 export 'package:flavor_ui/src/theme/theme.dart';
+export 'package:flavor_ui/src/responsive/responsive_utils.dart';
+export 'package:flavor_ui/src/responsive/responsive_view.dart';

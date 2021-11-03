@@ -45,12 +45,19 @@ class _ListTileState extends State<ListTile> {
   Widget build(BuildContext context) {
     late Color? _color;
     late Color _selectedColor;
+    Theme themeStateController;
+    Duration _duration;
+    try {
+      themeStateController = Theme.of(context).theme;
+      _selectedColor = widget.selectedColor ??
+          themeStateController.theme.primaryColor!.value;
+      _duration = Duration(milliseconds: themeStateController.theme.duration);
+    } catch (e) {
+      _selectedColor = widget.selectedColor ?? const Color(0xFF333333);
+      _duration = const Duration(milliseconds: 300);
+    }
 
-    Theme themeStateController = Theme.of(context).theme;
     _color = widget.color;
-
-    _selectedColor =
-        widget.selectedColor ?? themeStateController.theme.primaryColor!.value;
 
     return GestureDetector(
       onTap: widget.onTap,
@@ -62,31 +69,36 @@ class _ListTileState extends State<ListTile> {
       //   // // ignore: avoid_print
       // },
       child: AnimatedContainer(
-        duration: Duration(milliseconds: themeStateController.theme.duration),
-
+        duration: _duration,
         color: !selected ? _color ?? m.Colors.transparent : _selectedColor,
         // duration: defaultThemeDuration,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Flexible(
-                flex: 0,
-                child: ListTileLeading(child: widget.leading),
-              ),
-              Expanded(
-                child: ListTileBody(
-                    title: widget.title, subtitle: widget.subtitle),
-              ),
-              Flexible(
-                flex: 0,
-                child: ListTileTrailing(child: widget.trailing),
-              ),
-            ],
+          child: _ListTile(
+            leading: widget.leading,
+            title: widget.title,
+            subtitle: widget.subtitle,
+            trailing: widget.trailing,
           ),
+          // child: Row(
+          //   mainAxisSize: MainAxisSize.max,
+          //   mainAxisAlignment: MainAxisAlignment.start,
+          //   crossAxisAlignment: CrossAxisAlignment.center,
+          //   children: [
+          //     Flexible(
+          //       flex: 0,
+          //       child: ListTileLeading(child: widget.leading),
+          //     ),
+          //     Expanded(
+          //       child: ListTileBody(
+          //           title: widget.title, subtitle: widget.subtitle),
+          //     ),
+          //     Flexible(
+          //       flex: 0,
+          //       child: ListTileTrailing(child: widget.trailing),
+          //     ),
+          //   ],
+          // ),
         ),
       ),
     );
@@ -122,8 +134,8 @@ class ListTileBody extends StatelessWidget {
         // color: FlavorColors.black45,
         margin: const EdgeInsets.symmetric(horizontal: 8),
         child: SizedBox(
-          height: size.maxHeight,
-          width: size.maxWidth,
+          // height: size.maxHeight,
+          // width: size.maxWidth,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -153,5 +165,69 @@ class ListTileTrailing extends StatelessWidget {
         Container(
             // padding: const EdgeInsets.all(4),
             );
+  }
+}
+
+class _ListTile extends StatelessWidget {
+  const _ListTile({
+    Key? key,
+    this.leading,
+    this.title,
+    this.subtitle,
+    this.trailing,
+  }) : super(key: key);
+
+  final Widget? leading;
+
+  final Widget? title;
+
+  ///
+  final Widget? subtitle;
+
+  ///
+  final Widget? trailing;
+
+  @override
+  Widget build(BuildContext context) {
+    BoxDecoration? decoration;
+
+    final EdgeInsetsDirectional padding = EdgeInsetsDirectional.only(
+      start: leading != null ? 8.0 : 16.0,
+      end: trailing != null ? 8.0 : 16.0,
+    );
+
+    return Container(
+      padding: padding,
+      decoration: decoration,
+      height: (title != null && subtitle != null) ? 68.0 : 48.0,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          if (leading != null)
+            Padding(
+                padding: const EdgeInsetsDirectional.only(end: 8.0),
+                child: leading),
+          if (title != null && subtitle != null)
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  title!,
+                  subtitle!,
+                ],
+              ),
+            )
+          else if (title != null || subtitle != null)
+            Expanded(
+              child: title ?? subtitle!,
+            ),
+          if (trailing != null)
+            Padding(
+                padding: const EdgeInsetsDirectional.only(start: 8.0),
+                child: trailing),
+        ],
+      ),
+    );
   }
 }

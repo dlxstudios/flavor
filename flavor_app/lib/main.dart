@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flavor_app/cup_app.dart';
 import 'package:flavor_app/features/client/client_bootstrap.dart';
+import 'package:flavor_app/store_test.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:url_strategy/url_strategy.dart';
@@ -50,5 +51,6 @@ void main() {
 
   // startCupClient();
   // startMaterialClient();
-  startClient();
+  // startClient();
+  runApp(const StoreTestApp());
 }

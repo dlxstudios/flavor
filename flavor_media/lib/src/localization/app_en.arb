@@ -1,0 +1,6 @@
+{
+  "appTitle": "flavor_media",
+  "@appTitle": {
+    "description": "The title of the application"
+  }
+}

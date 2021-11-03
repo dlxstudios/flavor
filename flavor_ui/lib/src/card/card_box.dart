@@ -18,12 +18,17 @@ class CardBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Theme _themeStateController = Theme.of(context).theme;
+    Theme _themeStateController;
+    Color? _color;
+    try {
+      Theme _themeStateController = Theme.of(context).theme;
+      _color = _themeStateController.theme.cardColor!.value.withOpacity(.2);
+    } catch (e) {}
     return FlavorAnimatedContainer(
       padding: padding,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(borderRadius),
-        color: _themeStateController.theme.cardColor!.value.withOpacity(.2),
+        color: color ?? _color,
       ),
       clipBehavior: Clip.antiAlias,
       child: child,

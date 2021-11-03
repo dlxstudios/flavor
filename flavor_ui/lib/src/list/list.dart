@@ -42,14 +42,14 @@ class FlavorList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // ignore: avoid_print
-    print('controller::$controller');
+    // print('controller::$controller');
 
     if (itemCount == null) {
       return AspectRatio(
         aspectRatio: aspectRatio ?? 1.0,
         child: Container(
           padding: const EdgeInsets.all(8.0),
-          child: const FlavorContainerTile(
+          child: const CardTile(
             //
             headerTitle: 'No Items',
           ),
@@ -61,15 +61,16 @@ class FlavorList extends StatelessWidget {
       return ListView.builder(
         cacheExtent: 100,
         controller: controller,
-        shrinkWrap: true,
+        // shrinkWrap: true,
         itemCount: itemCount,
         scrollDirection: scrollDirection,
         itemBuilder: (context, itemIndex) {
-          return AspectRatio(
-            // aspectRatio: .7,
-            aspectRatio: aspectRatio ?? 1.0,
-            child: builder!(context, itemIndex),
-          );
+          return builder!(context, itemIndex);
+          // return AspectRatio(
+          //   // aspectRatio: .7,
+          //   aspectRatio: aspectRatio ?? 1.0,
+          //   child: builder!(context, itemIndex),
+          // );
         },
       );
     }
@@ -86,9 +87,9 @@ class FlavorList extends StatelessWidget {
           aspectRatio: aspectRatio ?? 1.0,
           child: Container(
             padding: const EdgeInsets.all(0.0),
-            child: FlavorContainerTile(
+            child: CardTile(
               backgroundImage: backgroundImage,
-              containerTileLayout: FlavorContainerTileLayout.stacked,
+              containerTileLayout: CardTileLayout.stacked,
               onTap: () {},
               //
               footerTitle: footerTitle,

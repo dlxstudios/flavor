@@ -1,9 +1,10 @@
 import 'package:flavor_ui/flavor_ui.dart';
+import 'package:flutter/material.dart' show GridTileBar;
 import 'package:flutter/widgets.dart';
 
-enum FlavorContainerTileLayout { stacked, seperated }
+enum CardTileLayout { stacked, seperated }
 
-class FlavorContainerTile extends StatelessWidget {
+class CardTile extends StatelessWidget {
   final Widget? header;
   final Widget? body;
   final Widget? footer;
@@ -20,7 +21,7 @@ class FlavorContainerTile extends StatelessWidget {
 
   final EdgeInsetsGeometry? padding;
 
-  final FlavorContainerTileLayout? containerTileLayout;
+  final CardTileLayout? containerTileLayout;
 
   final Object? heroTag;
 
@@ -38,7 +39,7 @@ class FlavorContainerTile extends StatelessWidget {
   final Widget? footerTrailing;
   final Widget? headerTrailing;
 
-  const FlavorContainerTile({
+  const CardTile({
     Key? key,
     this.header,
     this.body,
@@ -53,7 +54,7 @@ class FlavorContainerTile extends StatelessWidget {
     this.padding,
     this.backgroundImage,
     this.backgroundImageBoxFit = BoxFit.cover,
-    this.containerTileLayout = FlavorContainerTileLayout.stacked,
+    this.containerTileLayout = CardTileLayout.stacked,
     this.heroTag,
     this.color,
     this.headerTitle,
@@ -79,18 +80,18 @@ class FlavorContainerTile extends StatelessWidget {
       footerTrailing != null;
 
   Widget _buildFooterListTile() {
-    return FlavorListTile(
-      title: footerTitle,
-      subtitle: footerSubtitle,
+    return ListTile(
+      title: footerTitle != null ? Text(footerTitle!) : null,
+      subtitle: footerSubtitle != null ? Text(footerSubtitle!) : null,
       leading: footerLeading,
       trailing: footerTrailing,
     );
   }
 
   Widget _buildHeaderListTile() {
-    return FlavorListTile(
-      title: headerTitle,
-      subtitle: headerSubtitle,
+    return ListTile(
+      title: headerTitle != null ? Text(headerTitle!) : null,
+      subtitle: headerSubtitle != null ? Text(headerSubtitle!) : null,
       leading: headerLeading,
       trailing: headerTrailing,
     );
@@ -101,12 +102,11 @@ class FlavorContainerTile extends StatelessWidget {
     Widget _final;
 
     switch (containerTileLayout) {
-      case FlavorContainerTileLayout.stacked:
-        _final = stackedLayout(context);
-        break;
-      case FlavorContainerTileLayout.seperated:
-        _final = seperatedLayout();
-        break;
+      case CardTileLayout.stacked:
+        return stackedLayout(context);
+      case CardTileLayout.seperated:
+        return seperatedLayout();
+
       default:
         _final = stackedLayout(context);
     }
@@ -121,39 +121,29 @@ class FlavorContainerTile extends StatelessWidget {
       _childrenSeperated.add(_buildHeaderListTile());
     }
 
+    if (header != null) {
+      _childrenSeperated.add(header!);
+    }
+
     _childrenSeperated.add(
       Expanded(
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(borderRadius),
-          ),
-          margin: const EdgeInsets.all(0),
-          color: color,
-          child: Stack(
-            fit: StackFit.expand,
-            children: [
-              backgroundImage != null
-                  ? Container(
-                      color: color,
-                      child: Image.network(
-                        backgroundImage!,
-                        fit: backgroundImageBoxFit,
-                      ),
-                    )
-                  : Container(),
-              body != null ? body! : Container(),
-              Container(
-                // elevation: 0,
-                // borderOnForeground: true,
-                // borderRadius: BorderRadius.circular(borderRadius),
-                // color: FlavorColors().transparent,
-                clipBehavior: Clip.antiAlias,
-                child: GestureDetector(
-                  onTap: onTap,
-                ),
-              ),
-            ],
-          ),
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            backgroundImage != null
+                ? Container(
+                    color: color,
+                    child: Image.network(
+                      backgroundImage!,
+                      fit: backgroundImageBoxFit,
+                    ),
+                  )
+                : Container(),
+            body != null ? body! : Container(),
+            GestureDetector(
+              onTap: onTap,
+            ),
+          ],
         ),
       ),
     );
@@ -162,11 +152,17 @@ class FlavorContainerTile extends StatelessWidget {
       _childrenSeperated.add(_buildFooterListTile());
     }
 
-    return Container(
+    if (footer != null) {
+      _childrenSeperated.add(footer!);
+    }
+
+    return CardBox(
+      borderRadius: borderRadius,
+      color: color,
       padding: padding,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        // crossAxisAlignment: CrossAxisAlignment.start,
         children: _childrenSeperated,
       ),
     );
@@ -178,7 +174,7 @@ class FlavorContainerTile extends StatelessWidget {
     if (header != null) {
       _childrenStacked.add(
         Positioned(
-          bottom: 0,
+          top: 0,
           left: 0,
           right: 0,
           child: header!,
@@ -189,15 +185,11 @@ class FlavorContainerTile extends StatelessWidget {
         top: 0,
         left: 0,
         right: 0,
-        child: Container(),
-        // child: GridTileBar(
-        //   title: headerTitle != null
-        //       ? FlavorText.bodyText1(context, headerTitle!)
-        //       : null,
-        //   subtitle: headerSubtitle != null
-        //       ? FlavorText.caption(context, headerSubtitle!)
-        //       : null,
-        // ),
+        // child: Container(),
+        child: GridTileBar(
+          title: headerTitle != null ? FlavorText(headerTitle!) : null,
+          subtitle: headerSubtitle != null ? FlavorText(headerSubtitle!) : null,
+        ),
       ));
     }
 
@@ -217,16 +209,12 @@ class FlavorContainerTile extends StatelessWidget {
         bottom: 0,
         left: 0,
         right: 0,
-        child: Container(),
-        // child: GridTileBar(
-        //   leading: footerLeading,
-        //   subtitle: footerTitle != null
-        //       ? FlavorText.caption(context, footerTitle!)
-        //       : null,
-        //   title: footerSubtitle != null
-        //       ? FlavorText.bodyText2(context, footerSubtitle!)
-        //       : null,
-        // ),
+        // child: Container(),
+        child: GridTileBar(
+          leading: footerLeading,
+          subtitle: footerTitle != null ? FlavorText(footerTitle!) : null,
+          title: footerSubtitle != null ? FlavorText(footerSubtitle!) : null,
+        ),
       ));
     }
 
@@ -255,6 +243,7 @@ class FlavorContainerTile extends StatelessWidget {
               // elevation: 0,
               // borderOnForeground: true,
               // color: FlavorColors().transparent,
+              decoration: const BoxDecoration(),
               clipBehavior: Clip.antiAlias,
               child: GestureDetector(
                 onTap: onTap,

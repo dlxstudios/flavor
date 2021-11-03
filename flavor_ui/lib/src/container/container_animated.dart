@@ -85,11 +85,6 @@ class FlavorAnimatedContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /// TODO: fix animation duration
-    ///
-    // ignore: unused_local_variable
-    Theme themeStateController = Theme.of(context).theme;
-
     return AnimatedContainer(
       alignment: alignment,
       clipBehavior: clipBehavior,

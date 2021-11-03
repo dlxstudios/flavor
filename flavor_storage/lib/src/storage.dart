@@ -1,7 +1,9 @@
-import 'package:flutter/widgets.dart';
-
 import 'dart:convert';
+import 'dart:developer';
+
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter/widgets.dart';
+import 'package:get_storage/get_storage.dart';
 
 //...
 Future<Map<String, dynamic>> parseJsonFromAssets(String assetsPath) async {
@@ -11,11 +13,23 @@ Future<Map<String, dynamic>> parseJsonFromAssets(String assetsPath) async {
       .then((jsonStr) => jsonDecode(jsonStr));
 }
 
-class FlavorStoreNotifier extends ChangeNotifier {
+class FlavorStoreController {
   late FlavorStoreModel store;
 
-  static init() {
-    return FlavorStoreNotifier();
+  late GetStorage box;
+
+  init() async {
+    await GetStorage.init();
+    box = GetStorage();
+  }
+
+  dynamic get(String key) {
+    return box.read(key);
+  }
+
+  Future<void> save(String key, dynamic value) async {
+    log(key);
+    return await box.write(key, value);
   }
 }
 

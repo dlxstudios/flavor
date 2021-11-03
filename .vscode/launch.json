@@ -1,0 +1,110 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "media",
+            "cwd": "flavor_media",
+            "request": "launch",
+            "type": "dart",
+        },
+        {
+            "name": "flavor_app",
+            "cwd": "flavor_app",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "flavor_app (profile mode)",
+            "cwd": "flavor_app",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "flavor_auth",
+            "cwd": "flavor_auth",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "flavor_auth_google",
+            "cwd": "flavor_auth_google",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "flavor_auth_google (profile mode)",
+            "cwd": "flavor_auth_google",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "flavor_http",
+            "cwd": "flavor_http",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "flavor_storage",
+            "cwd": "flavor_storage",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "flavor_storage (profile mode)",
+            "cwd": "flavor_storage",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "flavor_ui",
+            "cwd": "flavor_ui",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "flavor_ui (profile mode)",
+            "cwd": "flavor_ui",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "example",
+            "cwd": "flavor_auth\\example",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "flavor_client",
+            "cwd": "flavor_firebase\\flavor_client",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "flavor_client (profile mode)",
+            "cwd": "flavor_firebase\\flavor_client",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "flavor_storage",
+            "cwd": "packages\\flavor_storage",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "flavor_storage (profile mode)",
+            "cwd": "packages\\flavor_storage",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        }
+    ]
+}

@@ -1,132 +1,100 @@
 import 'dart:convert';
+import 'dart:developer';
 
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:http/http.dart' as http;
 
-class FlavorHttp {
-  Future fetch(
-    String path, {
-    Map<String, String>? headers,
-    Map<String, String>? params,
-  }) async {
-    // log.w('fetching endpoint \n$path');
-    // log.w('with headers \n$headers');
-    // log.w('with params \n$params');
+enum FlavorHttpMethod { get, post, put, delete }
 
-    var uri = Uri.parse('$path');
-    uri = uri.replace(queryParameters: params);
-
-    // log.w(uri.queryParametersAll);
-
-    http.Response response;
-
-    try {
-      response = await http.get(uri, headers: headers).catchError((err) {
-        // log.wtf(err);
-      });
-    } catch (e) {
-      return Future.error(
-          'Fetch failed : unable to fetch from endpoint $path \n$e');
-    }
-
-    return Future.value(response.body);
-  }
-
-  Future<Map<String, dynamic>> fetchJson(
-    String path, {
-    Map<String, String>? headers,
-    Map<String, String>? params,
-  }) async {
-    // log.w('fetching endpoint \n$path');
-    // log.w('with headers \n$headers');
-    // log.w('with params \n$params');
-
-    var uri = Uri.parse('$path');
-    uri = uri.replace(queryParameters: params);
-
-    // log.w(uri.queryParametersAll);
-
-    String responseBody;
-    // try {
-    responseBody = await fetch(path, params: params, headers: headers);
-    // print('responseBody');
-    // } catch (e) {
-    // return Future.error('$e');
-    // return Future.error('unable to fetch from endpoint $path');
-    // }
-
-    try {
-      // log.w(json.decode(responseBody));
-      return json.decode(responseBody);
-    } catch (e) {
-      return Future.error('unable to decode to json from endpoint $path');
-    }
-  }
-
-  Future<Map<String, dynamic>> post(dynamic path, dynamic body) async {
-    // log.w('posting endpoint $path');
-    final response = await http.post(path, body: body);
-    try {
-      // log.w('response.statusCode ${response.statusCode}');
-      return json.decode(response.body);
-    } catch (e) {
-      return Future.error('unable to load from endpoint $path');
-    }
-  }
-}
-
-Future fetch(
+Future<http.Response> fetch(
   String path, {
   Map<String, String>? headers,
   Map<String, String>? params,
+  FlavorHttpMethod method = FlavorHttpMethod.get,
+  dynamic body,
+  Encoding? encoding,
 }) async {
-  // log.w('fetching endpoint \n$path');
-  // log.w('with headers \n$headers');
-  // log.w('with params \n$params');
-
   var uri = Uri.parse('$path');
   uri = uri.replace(queryParameters: params);
 
-  // log.w(uri.queryParametersAll);
-
-  http.Response response;
-  try {
-    response = await http.get(uri, headers: headers).catchError((err) {
-      // log.wtf(err);
-    });
-  } catch (e) {
-    return Future.error('unable to fetch from endpoint $path \n$e');
+  http.Response resp;
+  switch (method) {
+    case FlavorHttpMethod.get:
+      resp = await http.get(uri, headers: headers);
+      break;
+    case FlavorHttpMethod.post:
+      resp = await http.post(uri, headers: headers, body: body);
+      break;
+    case FlavorHttpMethod.put:
+      resp =
+          await http.put(uri, body: body, encoding: encoding, headers: headers);
+      break;
+    case FlavorHttpMethod.delete:
+      resp = await http.delete(uri, headers: headers);
+      break;
   }
 
-  return Future.value(response.body);
+  if (resp.statusCode == 200) {
+    return Future.value(resp);
+  } else {
+    return Future.error(resp.body);
+  }
 }
 
 Future<Map<String, dynamic>> fetchJson(
   String path, {
   Map<String, String>? headers,
   Map<String, String>? params,
+  FlavorHttpMethod method = FlavorHttpMethod.get,
+  dynamic body,
+  Encoding? encoding,
 }) async {
-  // log.w('fetching endpoint \n$path');
-  // log.w('with headers \n$headers');
-  // log.w('with params \n$params');
-
   var uri = Uri.parse('$path');
   uri = uri.replace(queryParameters: params);
 
-  // log.w(uri.queryParametersAll);
+  Map<String, String> _headers = <String, String>{
+    'Content-Type': 'application/json; charset=UTF-8',
+  };
 
-  String responseBody;
-  try {
-    responseBody = await fetch(path, params: params, headers: headers);
-  } catch (e) {
-    return Future.error('unable to fetch from endpoint $path');
-  }
+  return await fetch(
+    path,
+    params: params,
+    headers: {
+      ..._headers,
+      ...?headers,
+    },
+    body: json.encode(body),
+    encoding: encoding,
+    method: method,
+  ).then((res) {
+    return json.decode(res.body.toString());
+  });
 
-  try {
-    // log.w(json.decode(responseBody));
-    return json.decode(responseBody);
-  } catch (e) {
-    return Future.error('unable to decode to json from endpoint $path');
-  }
+  // String responseBody;
+
+  // responseBody = await fetch(
+  //   path,
+  //   params: params,
+  //   headers: {
+  //     ..._headers,
+  //     ...?headers,
+  //   },
+  //   body: json.encode(body),
+  //   encoding: encoding,
+  //   method: method,
+  // );
+  // //________________________________
+  // var _json;
+  // try {
+  //   _json = json.decode(responseBody);
+  // } catch (e) {
+  //   return Future.error({
+  //     'error': {'message': 'unable to decode to json from endpoint $path'}
+  //   });
+  // }
+  // //________________________________
+
+  // return Future.value(_json);
 }
 
 /// Sends an HTTP HEAD request with the given headers to the given URL, which

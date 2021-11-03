@@ -16,8 +16,8 @@ class FlavorPageError extends StatelessWidget {
     return FlavorScaffold(
         child: Center(
       child: SizedBox(
-        width: 300,
-        height: 300,
+        // width: 300,
+        // height: 300,
         child: CardBox(
           padding: const EdgeInsets.all(16),
           child: Column(

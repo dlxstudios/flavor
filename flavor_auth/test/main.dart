@@ -1,14 +1,14 @@
 import 'dart:io';
 
 import 'package:flavor_auth/flavor_auth.dart';
-import 'package:flavor_auth/src/email.dart';
-import 'package:flavor_auth/src/google.dart';
+import 'package:flavor_auth/src/firebase/firebase_email.dart';
+import 'package:flavor_auth/src/google/google.dart';
 import 'package:logger/logger.dart';
 
 var log = Logger();
 
 var defaultApiKey = 'AIzaSyBON2ZTo1Ulnctdx3wIuUbA2u8nLWwQPj4';
-var auth = FlavorAuthEmail(googleApiKey: defaultApiKey);
+var auth = FlavorAuthEmailFirebase(googleApiKey: defaultApiKey);
 
 Future<void> main(List<String> args) async {
   if (args == null || args.isEmpty) {
@@ -102,7 +102,7 @@ Future<void> commandGoogle(List<String> args) async {
   var googleAuthResponse = await startOAuthServerGoogle(ga);
 
   // auth user with firebase server
-  var user = await FlavorAuthEmail.signInWithIdp(
+  var user = await FlavorAuthEmailFirebase.signInWithIdp(
     providerId: 'google.com',
     googleApiKey: defaultApiKey,
     googleIdToken: googleAuthResponse.accessToken!,
