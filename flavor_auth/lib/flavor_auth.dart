@@ -8,7 +8,6 @@ library flavor_auth;
 export 'src/models/user.dart';
 export 'src/models/token.dart';
 export 'src/models/user_auth.dart';
-export 'src/email/auth_repo_old.dart';
 export 'src/email/auth_service.dart';
 export 'src/email/auth_email_controller.dart';
 // export 'src/firebase/firebase_email.dart';

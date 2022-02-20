@@ -1,20 +1,33 @@
-import 'package:redis/redis.dart';
+import 'package:flavor_dartis/flavor_dartis.dart';
 
 class RedisService {
   RedisService();
 
-  final RedisConnection redis = RedisConnection();
-  late Command command;
+  late Client client;
 
-  Future<void> start(String host,
-      [int? port, String? username, String? password]) async {
-    await redis.connect(host, port).then((_command) async {
-      await _command.send_object([
-        'AUTH',
-        'flavor_server',
-        'dlxOne1!',
-      ]);
-      command = _command;
+  Future<void> start({
+    String? host = 'localhost',
+    int? port = 6379,
+    String? username,
+    String? password,
+    RedisAuth? auth,
+  }) async {
+    client = await Client.connect('redis://$host:$port')
+        .then((Client _client) async {
+      if (auth != null) {
+        await _client.run<String>(Command([
+          'AUTH',
+          auth.username,
+          auth.password,
+        ]));
+      }
+      return _client;
     });
   }
+}
+
+class RedisAuth {
+  final String username, password;
+
+  RedisAuth({required this.username, required this.password});
 }

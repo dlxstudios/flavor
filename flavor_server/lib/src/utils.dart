@@ -64,3 +64,9 @@ Handler fallback(String indexPath) => (Request request) {
       final indexFile = File(indexPath).readAsStringSync();
       return Response.ok(indexFile, headers: {'content-type': 'text/html'});
     };
+
+Response jsonResponse(Object data) {
+  return Response.ok(jsonEncode(data), headers: {
+    HttpHeaders.contentTypeHeader: ContentType.json.mimeType,
+  });
+}

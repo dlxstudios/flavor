@@ -1,29 +1,17 @@
-import 'dart:developer';
-
 import 'package:flavor_auth/flavor_auth.dart';
 
 class AuthController {
   FlavorUser? _user;
-
   void Function(FlavorUser? user)? onUserChange;
+  late final FlavorAuthService authService;
 
-  AuthController({
-    this.onUserChange,
-    required this.authService,
-  });
-  // ignore: unnecessary_getters_setters
-  FlavorUser? get user => _user;
-  // ignore: unnecessary_getters_setters
-  set user(FlavorUser? user) => _user = user;
-  final FlavorAuthService authService;
-
-  Future<void> signUpWithEmailAndPassword({
-    required String displayName,
+  Future<FlavorUser> signUpWithEmailAndPassword({
+    String? displayName,
     required String email,
     required String password,
     String? phone,
   }) async {
-    _user = await authService
+    return await authService
         .signUpWithEmailAndPassword(
       displayName: displayName,
       email: email,
@@ -34,16 +22,17 @@ class AuthController {
       if (onUserChange != null) {
         onUserChange!(_user);
       }
+      return value;
     });
   }
 
-  Future<void> logInWithEmailAndPassword({
+  Future<FlavorUser> logInWithEmailAndPassword({
     required String email,
     required String password,
   }) async {
-    print(email);
-    print(password);
-    _user = await authService
+    // print(email);
+    // print(password);
+    return await authService
         .logInWithEmailAndPassword(
       email: email,
       password: password,
@@ -52,6 +41,7 @@ class AuthController {
       if (onUserChange != null) {
         onUserChange!(_user);
       }
+      return value;
     });
   }
 

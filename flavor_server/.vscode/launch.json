@@ -8,14 +8,20 @@
       "name": "mongo",
       "type": "dart",
       "request": "launch",
-      "program": "bin/mongo.dart"
+      "program": "bin/mongo.dart",
+      "args": [
+        "--no-sound-null-safety"
+      ]
     },
     {
       "name": "Flavor Server",
       "request": "launch",
       "type": "dart",
       "program": "bin/server.dart",
-      "args": ["-a","0.0.0.0"]
+      "args": [
+        "-a",
+        "0.0.0.0"
+      ]
     }
   ]
 }

@@ -1,32 +1,53 @@
-import 'package:redis/redis.dart';
+import 'package:flavor_dartis/flavor_dartis.dart';
 
 class RedisFunction {
   static Future<bool> exist(
-      {required Command command,
+      {required Client client,
       required String path,
       List args = const []}) async {
-    return await command.send_object(['EXISTS', path]) == 1 ? true : false;
+    return await client.asCommands<String, String>().exists(key: path).then(
+          (value) => value == 1 ? true : false,
+        );
   }
 
   static Future get(
-      {required Command command,
+      {required Client client,
       required String path,
       List args = const []}) async {
-    return await command.send_object(['GET', path, ...args]);
+    return await client.asCommands<String, String>().get(path);
   }
 
   static Future set(
-      {required Command command,
+      {required Client client,
       required String path,
       required String value}) async {
-    return await command.set(path, value);
+    return await client.asCommands<String, String>().set(path, value);
   }
 
+// ignore: todo
 //TODO:: impliment EXPIRE
   static Future expire(
-      {required Command command,
+      {required Client client,
+      required String path,
+      required Duration duration}) async {
+    return await client
+        .asCommands<String, String>()
+        .expire(path, duration.inSeconds);
+  }
+
+  static Future add(
+      {required Client client,
       required String path,
       required String value}) async {
-    return await command.set(path, value);
+    return await client.asCommands<String, String>().lpush(path, value: value);
+  }
+
+  static Future list({
+    required Client client,
+    required String path,
+    int start = 0,
+    int end = -1,
+  }) async {
+    return await client.asCommands<String, String>().lrange(path, start, end);
   }
 }

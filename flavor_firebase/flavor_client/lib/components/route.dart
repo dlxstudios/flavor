@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class FlavorRouteWidget extends StatelessWidget {
+class LBRouteWidget extends StatelessWidget {
   final Widget child;
   final String path;
   // final AdaptiveScaffoldDestination? destination;
@@ -21,7 +21,7 @@ class FlavorRouteWidget extends StatelessWidget {
 
   Function? onRequiresLogin;
 
-  FlavorRouteWidget({
+  LBRouteWidget({
     Key? key,
     required this.path,
     required this.child,

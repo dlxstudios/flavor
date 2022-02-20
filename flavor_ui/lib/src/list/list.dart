@@ -19,23 +19,23 @@ class FlavorList extends StatelessWidget {
 
   final String? backgroundImage;
   final double? aspectRatio;
-  const FlavorList(
-      {Key? key,
-      this.itemCount,
-      this.scrollDirection = Axis.vertical,
-      this.headerTitle,
-      this.headerSubtitle,
-      this.footerTitle,
-      this.footerSubtitle,
-      this.footerLeading,
-      this.headerLeading,
-      this.footerTrailing,
-      this.headerTrailing,
-      this.controller,
-      this.backgroundImage,
-      this.aspectRatio,
-      this.builder})
-      : super(key: key);
+  const FlavorList({
+    Key? key,
+    this.itemCount,
+    this.scrollDirection = Axis.vertical,
+    this.headerTitle,
+    this.headerSubtitle,
+    this.footerTitle,
+    this.footerSubtitle,
+    this.footerLeading,
+    this.headerLeading,
+    this.footerTrailing,
+    this.headerTrailing,
+    this.controller,
+    this.backgroundImage,
+    this.aspectRatio,
+    this.builder,
+  }) : super(key: key);
 
   final int? itemCount;
 
@@ -110,7 +110,8 @@ class FlavorList extends StatelessWidget {
 }
 
 class FlavorTileSection extends StatelessWidget {
-  final String? title;
+  // final String? title;
+  final Widget? title;
 
   final Widget child;
 
@@ -134,11 +135,17 @@ class FlavorTileSection extends StatelessWidget {
         title != null
             ? Flexible(
                 flex: 0,
-                child: FlavorTileHeader(
-                  title: title,
-                ),
+                child: title ?? Container(),
               )
             : Container(),
+        // title != null
+        //     ? Flexible(
+        //         flex: 0,
+        //         child: FlavorTileHeader(
+        //           title: title,
+        //         ),
+        //       )
+        //     : Container(),
         Expanded(
           child: child,
         ),

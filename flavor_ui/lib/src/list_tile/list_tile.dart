@@ -200,6 +200,7 @@ class _ListTile extends StatelessWidget {
       padding: padding,
       decoration: decoration,
       height: (title != null && subtitle != null) ? 68.0 : 48.0,
+      // width: double.infinity,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
@@ -224,8 +225,9 @@ class _ListTile extends StatelessWidget {
             ),
           if (trailing != null)
             Padding(
-                padding: const EdgeInsetsDirectional.only(start: 8.0),
-                child: trailing),
+              padding: const EdgeInsetsDirectional.only(start: 8.0),
+              child: trailing,
+            ),
         ],
       ),
     );

@@ -12,4 +12,6 @@ abstract class Env {
   static const redisHost = _Env.redisHost;
   static const int redisPort = _Env.redisPort;
   static const int serverPort = _Env.serverPort;
+  static const String redisUsername = _Env.redisUsername;
+  static const String redisPassword = _Env.redisPassword;
 }

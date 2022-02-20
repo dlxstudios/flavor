@@ -18,8 +18,8 @@ class FlavorStoreController {
 
   late GetStorage box;
 
-  init() async {
-    await GetStorage.init();
+  init([String container = 'GetStorage']) async {
+    await GetStorage.init(container);
     box = GetStorage();
   }
 

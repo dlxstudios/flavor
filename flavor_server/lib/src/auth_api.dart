@@ -3,19 +3,20 @@ import 'dart:io';
 
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:flavor_auth/flavor_auth.dart';
-import 'package:flavor_redis/flavor_redis.dart';
-import 'package:redis/redis.dart';
-import 'package:shelf/shelf.dart';
-import 'package:shelf_router/shelf_router.dart';
+import 'package:flavor_dartis/flavor_dartis.dart';
 import 'package:flavor_server/auth_server.dart';
 import 'package:flavor_server/src/logger.dart';
+import 'package:shelf/shelf.dart';
+import 'package:shelf_router/shelf_router.dart';
+
+import 'package:flavor_redis/flavor_redis.dart';
 
 import './utils.dart';
 
-var userEmailPrefix = 'user::email::';
-var userIDPrefix = 'user::id::';
-var userTokenPrefix = 'user::token::';
-var userFlavorUserPrefix = 'user::flavorUser::';
+const String userEmailPrefix = 'auth::userLogin::byEmail::';
+const String userIDPrefix = 'auth::userLogin::byId::';
+const String userTokenPrefix = 'auth::token::';
+const String userFlavorUserPrefix = 'auth::flavorUser::';
 
 class AuthApi {
   RedisService redisService;
@@ -25,20 +26,27 @@ class AuthApi {
   Handler get router {
     final router = Router();
 
-    router.get('/keys', (Request req) async {
-      var data = await redisService.command.send_object(['KEYS', '*']);
+    final strings = redisService.client.asCommands<String, String>();
+    final bytes = redisService.client.asCommands<String, List<int>>();
+    router.get('/list/<path>', (Request req, String path) async {
+      var data = await strings.keys(path);
       return Response.ok(data.toString());
     });
 
+    router.get('/keys', (Request req) async {
+      var data = await strings.keys('*');
+      return jsonResponse({'items': data});
+    });
+
     router.get('/keys/<path>', (Request req, String path) async {
-      var data = await redisService.command.send_object(['Get', path]);
-      // var data = await redisService.command.send_object(['FLUSHALL']);
+      var data = await strings.get(path);
+      // var data = await redisService.client.send_object(['FLUSHALL']);
       return Response.ok(data.toString());
     });
 
     router.delete('/keys', (Request req) async {
-      var data = await redisService.command.send_object(['FLUSHALL']);
-      return Response.ok(data.toString());
+      var data = await strings.flushall();
+      return Response.ok(true.toString());
     });
 
     router.put('/email', (Request req) async {
@@ -59,9 +67,9 @@ class AuthApi {
       }
 
       final userExist = await _UserExist(
-          command: redisService.command, path: '$userEmailPrefix$email');
+          client: redisService.client, path: '$userEmailPrefix$email');
 
-      if (userExist) {
+      if (userExist == true) {
         logger.i('router.put(/api/users) executed in ${stopwatch.elapsed}');
         return Response(HttpStatus.badRequest, body: 'User already exists');
       }
@@ -77,25 +85,35 @@ class AuthApi {
       );
 
       await RedisFunction.set(
-        command: redisService.command,
+        client: redisService.client,
         path: '$userEmailPrefix${_newUserLogin.email}',
         value: _newUserLogin.id!,
       );
 
+      // await strings.set(
+      //     '$userEmailPrefix${_newUserLogin.email}', _newUserLogin.id!);
+
       await RedisFunction.set(
-        command: redisService.command,
+        client: redisService.client,
         path: '$userIDPrefix${_newUserLogin.id}',
         value: _newUserLogin.toJson(),
       );
+
+      // await strings.set(
+      //     '$userIDPrefix${_newUserLogin.id}', _newUserLogin.toJson());
 
       final token =
           await createToken(secret: Env.secretKey, userId: _newUserLogin.id!);
 
       await saveToken(
-        command: redisService.command,
+        client: redisService.client,
         token: token,
         userTokenPath: '$userTokenPrefix${token.signed}',
       );
+
+      // await strings.set('$userTokenPrefix${token.signed}', token.toJson());
+      // await strings.expire(
+      //     '$userTokenPrefix${token.signed}', token.expiry.inSeconds);
 
       var flavorUser = FlavorUser(
         email: _newUserLogin.email,
@@ -110,10 +128,13 @@ class AuthApi {
       );
 
       await RedisFunction.set(
-        command: redisService.command,
+        client: redisService.client,
         path: '$userFlavorUserPrefix${_newUserLogin.id}',
         value: flavorUser.toJson(),
       );
+
+      // await strings.set(
+      //     '$userFlavorUserPrefix${_newUserLogin.id}', flavorUser.toJson());
 
       stopwatch.stop();
       logger.i('router.put executed in ${stopwatch.elapsed}');
@@ -125,7 +146,7 @@ class AuthApi {
 
     // #Login
     router.post('/email', (Request req) async {
-      final stopwatch = Stopwatch()..start();
+      // final stopwatch = Stopwatch()..start();
 
       final payload = await req.readAsString();
       final userInfo = json.decode(payload);
@@ -150,7 +171,10 @@ class AuthApi {
       }
 
       final userExist = await _UserExist(
-          command: redisService.command, path: '$userEmailPrefix$email');
+          client: redisService.client, path: '$userEmailPrefix$email');
+
+      // final userExist = await strings.exists(key: '$userEmailPrefix$email');
+
       if (!userExist) {
         return Response.notFound(
             jsonEncode({
@@ -165,7 +189,7 @@ class AuthApi {
       }
 
       var userLogin = await _UserLoginGet(
-        command: redisService.command,
+        client: redisService.client,
         idPath: '$userEmailPrefix$email',
         dataPrefix: '$userIDPrefix',
       );
@@ -186,7 +210,7 @@ class AuthApi {
 
       try {
         var userLogin = await _UserLoginGet(
-          command: redisService.command,
+          client: redisService.client,
           idPath: '$userEmailPrefix$email',
           dataPrefix: '$userIDPrefix',
         );
@@ -194,19 +218,19 @@ class AuthApi {
             await createToken(secret: Env.secretKey, userId: userLogin.id!);
 
         await saveToken(
-          command: redisService.command,
+          client: redisService.client,
           token: token,
           userTokenPath: '$userTokenPrefix${token.signed}',
         );
 
-        var flavorUserJaon = await RedisFunction.get(
-            command: redisService.command,
+        var flavorUserJson = await RedisFunction.get(
+            client: redisService.client,
             path: '$userFlavorUserPrefix${userLogin.id!}');
 
-        var flavorUser = FlavorUser.fromJson(flavorUserJaon);
+        var flavorUser = FlavorUser.fromJson(flavorUserJson);
 
-        stopwatch.stop();
-        logger.i('router.post(/email) executed in ${stopwatch.elapsed}');
+        // stopwatch.stop();
+        // logger.i('router.post(/email) executed in ${stopwatch.elapsed}');
         return Response.ok(flavorUser.toJson(), headers: {
           HttpHeaders.contentTypeHeader: ContentType.json.mimeType,
         });
@@ -217,10 +241,29 @@ class AuthApi {
       }
     });
 
-    var index = router.get('/', (Request req) async {
-      var yea = req.context['authDetails'] as JWT;
-      // var data = await redisService.command.send_object(['KEYS', '*']);
-      return Response.ok(yea.payload);
+    router.get('/user', (Request req) async {
+      var yea = req.context['authDetails'] as JWT?;
+
+      if (yea == null) {
+        return Response.notFound({'error': 'not auth'}.toString());
+      }
+
+      var userId = yea.subject;
+
+      var userLoginJson = await RedisFunction.get(
+        client: redisService.client,
+        path: '$userIDPrefix$userId',
+      );
+      var userLogin = UserLogin.fromJson(userLoginJson);
+
+      var userJson = await RedisFunction.get(
+        client: redisService.client,
+        path: '$userFlavorUserPrefix${userLogin.id}',
+      );
+
+      var user = FlavorUser.fromJson(userJson);
+
+      return jsonResponse(user.toMap());
     });
 
     final handler = Pipeline().addHandler(router);
@@ -228,20 +271,18 @@ class AuthApi {
   }
 }
 
-Future<bool> _UserExist(
-    {required Command command, required String path}) async {
-  return await RedisFunction.exist(command: command, path: path);
+Future<bool> _UserExist({required Client client, required String path}) async {
+  return await RedisFunction.exist(client: client, path: path);
 }
 
 Future<UserLogin> _UserLoginGet({
-  required Command command,
+  required Client client,
   required String idPath,
   required String dataPrefix,
 }) async {
-  var _id = await RedisFunction.get(command: command, path: idPath);
+  var _id = await RedisFunction.get(client: client, path: idPath);
 
-  var _login =
-      await RedisFunction.get(command: command, path: '$dataPrefix$_id');
+  var _login = await RedisFunction.get(client: client, path: '$dataPrefix$_id');
 
   var login = UserLogin.fromJson(_login);
 
@@ -261,18 +302,19 @@ Future<Token> createToken({
 }
 
 Future saveToken({
-  required Command command,
+  required Client client,
   required Token token,
   required String userTokenPath,
 }) async {
-  return await command.multi().then((Transaction trans) {
-    // trans.send_object(["SET", userTokenPath, token.toJson()]);
-    trans.send_object(['SET', userTokenPath, token.toJson()]);
-    trans.send_object(['EXPIRE', userTokenPath, token.expiry.inSeconds]);
-    trans.exec();
-  });
+  var commands = client.asCommands<String, String>();
+  // await commands.multi();
+  // await commands.set(userTokenPath, token.toJson());
+  // await commands.expire(userTokenPath, token.expiry.inSeconds);
+  // return await commands.exec();
 
-  // return varr;
+  await commands.set('$userTokenPath${token.signed}', token.toJson());
+  await commands.expire(
+      '$userTokenPath${token.signed}', token.expiry.inSeconds);
 }
 
 Middleware handleAuth(String secret) {
@@ -287,11 +329,12 @@ Middleware handleAuth(String secret) {
       }
 
       final updatedRequest = request.change(context: {
-        // 'authDetails': jwt,
+        'authDetails': jwt,
       });
 
-      logger.i(jwt);
+      // logger.i(jwt);
       return await innerHandler(updatedRequest);
+      // return innerHandler(request);
     };
   };
 }
@@ -307,7 +350,7 @@ Middleware isAuthorized() {
   );
 }
 
-dynamic verifyJwt(String token, String secret) {
+JWT? verifyJwt(String token, String secret) {
   try {
     final jwt = JWT.verify(token, SecretKey(secret));
     return jwt;

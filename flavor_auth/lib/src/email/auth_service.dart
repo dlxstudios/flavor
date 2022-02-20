@@ -7,7 +7,7 @@ import 'package:flavor_redis/flavor_redis.dart';
 class FlavorAuthService {
   final String baseUrl;
 
-  FlavorAuthService({this.baseUrl = 'http://localhost:8547/auth/'});
+  FlavorAuthService({this.baseUrl = 'http://localhost:8547/auth'});
 
   Future<FlavorUser> signUpWithEmailAndPassword({
     String? displayName,
@@ -29,7 +29,7 @@ class FlavorAuthService {
     required String password,
   }) async {
     return await fetchJson(
-      'http://localhost:8547/auth/email',
+      '$baseUrl/email',
       method: FlavorHttpMethod.post,
       body: {'email': email, 'password': password},
     ).then((value) {
@@ -49,8 +49,7 @@ class FlavorAuthRedisService {
   // ignore: always_declare_return_types
   connect({required String redisHost, required int redisPort}) async {
     redisService = RedisService();
-
-    await redisService.start(redisHost, redisPort);
+    await redisService.start(host: redisHost, port: redisPort);
   }
 
   Future<void> signUpWithEmailAndPassword(

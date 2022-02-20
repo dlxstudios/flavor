@@ -225,6 +225,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.3"
+  dart_jsonwebtoken:
+    dependency: transitive
+    description:
+      name: dart_jsonwebtoken
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.4.0"
   dart_style:
     dependency: transitive
     description:
@@ -344,6 +351,13 @@ packages:
       relative: true
     source: path
     version: "0.0.0"
+  flavor_redis:
+    dependency: transitive
+    description:
+      path: "../../flavor_redis"
+      relative: true
+    source: path
+    version: "1.0.0"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -659,7 +673,7 @@ packages:
       name: pointycastle
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.3.0"
+    version: "3.3.5"
   pool:
     dependency: transitive
     description:
@@ -716,6 +730,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.1"
+  redis:
+    dependency: transitive
+    description:
+      name: redis
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.0"
   riverpod:
     dependency: transitive
     description:
@@ -909,7 +930,7 @@ packages:
       name: uuid
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.4"
+    version: "3.0.5"
   vector_math:
     dependency: transitive
     description:
@@ -988,5 +1009,5 @@ packages:
     source: hosted
     version: "3.1.0"
 sdks:
-  dart: ">=2.13.0 <3.0.0"
+  dart: ">=2.14.4 <3.0.0"
   flutter: ">=2.0.0"

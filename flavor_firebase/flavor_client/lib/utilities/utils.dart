@@ -248,7 +248,7 @@ List<DataItem> jsonToDataItemList(List<dynamic> itemsJson,
 
 Future<List<DataItem>> jsonFetchList(String url,
     [String? itemsSelector]) async {
-  return fetch(url).then((resBody) {
+  return fetchJson(url).then((resBody) {
 // print(resBody.length.toString());
     List<DataItem> temp = [];
     // print('itemsSelector');
